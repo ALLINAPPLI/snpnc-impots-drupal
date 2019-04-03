@@ -1,6 +1,8 @@
 <template>
     <main>
-      <h1>Résultat</h1>
+        <table>
+
+        </table>
     </main>
 </template>
 
