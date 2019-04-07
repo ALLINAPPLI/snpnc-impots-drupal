@@ -1,6 +1,8 @@
 <template>
     <main>
-        <strong>rdata is : {{ rdata }}</strong>
+        <ul v-for="(item, index) in model">
+            <li><strong>{{ index }}</strong> : {{ item }}</li>
+        </ul>
     </main>
 </template>
 
@@ -8,7 +10,7 @@
 export default {
   name: 'ResultatTab',
   props: {
-    rdata: Object
+    model: Object
   },
 }
 </script>

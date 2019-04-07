@@ -1,13 +1,38 @@
 <template>
   <main class="container">
-    <h1>Hello</h1>
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <p v-html="introduction"></p>
+    <b-form-group
+      :label="compagnie.title"
+      :label-for="compagnie.id"
+      :description="compagnie.description"
+    >
+      <b-form-select
+        :id="compagnie.id"
+        :name="compagnie.id"
+        v-model="compagnie.value"
+        :options="compagnie.options"
+        required
+      ></b-form-select>
+    <b-form-invalid-feedback>
+      {{ compagnie.title }} {{ errorRequired }}
+    </b-form-invalid-feedback>
+
+    </b-form-group>
   </main>
 </template>
 
 <script>
 export default {
-  name: 'HomeTab'
+  name: 'HomeTab',
+  props: {
+    model: Object
+  },
+  data() {
+    return Object.assign({}, JSON.parse(JSON.stringify(this.model.home)), this.model.messages);
+  },
+  mounted() {
+    this.$validator.validate();
+  },
 }
 </script>
 

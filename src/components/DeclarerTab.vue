@@ -13,12 +13,12 @@
                   type="text"
                   min="0"
                   v-model="cumulNetImposable.value"
-                  v-validate="'min_value:0'"
-                  :state="validateState('cumulNetImposable')"
+                  v-validate="'required|min_value:0'"
+                  :state="validate('cumulNetImposable')"
                   @change="saveData('cumulNetImposable')"
                 />
               <b-form-invalid-feedback>
-                {{ cumulNetImposable.title }} doit être un montant positif arrondi.
+                {{ cumulNetImposable.title }} {{ errorMontant }}
               </b-form-invalid-feedback>
             </b-form-group>
 
@@ -34,12 +34,12 @@
                 type="text"
                 min="0"
                 v-model="nuites.value"
-                v-validate="'min_value:0'"
-                :state="validateState('nuites')"
+                v-validate="'required|min_value:0'"
+                :state="validate('nuites')"
                 @change="saveData('nuites')"
               />
               <b-form-invalid-feedback>
-                {{ nuites.title }} doit être un montant positif arrondi.
+                {{ nuites.title }} {{ errorMontant }}
               </b-form-invalid-feedback>
             </b-form-group>
 
@@ -55,12 +55,12 @@
                 type="text"
                 min="0"
                 v-model="idemnitesSecu.value"
-                v-validate="'min_value:0'"
-                :state="validateState('idemnitesSecu')"
+                v-validate="'required|min_value:0'"
+                :state="validate('idemnitesSecu')"
                 @change="saveData('idemnitesSecu')"
               />
               <b-form-invalid-feedback>
-                {{ idemnitesSecu.title }} doit être un montant positif arrondi.
+                {{ idemnitesSecu.title }} {{ errorMontant }}
               </b-form-invalid-feedback>
             </b-form-group>
         </b-form>
@@ -71,36 +71,29 @@
 export default {
     name: 'DeclarerTab',
     props: {
-      rdata: Object
+      model: Object
     },
     data : function() {
-      return Object.assign({}, this.rdata.declarer, {});
+      return Object.assign({}, JSON.parse(JSON.stringify(this.model.declarer)), this.model.messages);
+    },
+    mounted() {
+      this.$validator.validate();
     },
     methods: {
       checkForm(e) {
         e.preventDefault();
       },
-
-      validateState(field) {
-        if (this.veeFields[field]) {
-          console.log(field + " is defined");
-          console.log(field + " is dirty " + this.veeFields[field].dirty);
-          console.log(field + " is validated " + this.veeFields[field].validated);
-          console.log(field + " is changed " + this.veeFields[field].changed);
-        } else {
-          console.log(field + " is not defined");
-        }
+      validate(field) {
         if (this.veeFields[field] && (this.veeFields[field].dirty || this.veeFields[field].validated)) {
           return !this.errors.has(field);
         }
 
         return null;
       },
-
-      saveData: function(field) {
+      saveData(field) {
         // Save only valid data.
         if (this.veeFields[field] && this.veeFields[field].validated && !this.errors.has(field)) {
-          this.$emit('dataUpdated', field, this[field]);
+          this.$emit('dataUpdated', "declarer", field, this[field]);
         }
       }
     }

@@ -11,7 +11,7 @@
                 >
                     <b-card-text>
                         <component
-                            :rdata="rdata"
+                            :model="model"
                             @dataUpdated="updateResult"
                             v-bind:is="currentTab"
                         />
@@ -44,7 +44,7 @@
         },
         data() {
             return {
-                rdata: DataModel,
+                model : DataModel,
                 tabs: [
                     {
                         id : "HomeTab",
@@ -67,8 +67,9 @@
             }
         },
         methods: {
-            updateResult: function(key, value) {
-                this.rdata[key] = value;
+            updateResult: function(context, key, value) {
+                console.log("update result: ", key, value);
+                this.model[context][key] = value;
             }
         }
     }
