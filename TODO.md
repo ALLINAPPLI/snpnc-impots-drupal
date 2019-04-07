@@ -1,4 +1,9 @@
 
+# Gotchas
+
+Use input type="text" for numeric values as there is bug in vee-validate
+
+
 # Style
 
  - Arrow style navigation

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'HelloTab'
+  name: 'HomeTab'
 }
 </script>
 

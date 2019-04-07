@@ -7,12 +7,14 @@
                     :key="tab.id"
                     :title="tab.title"
                     :active="currentTab == tab.id"
-                    :data="tab.data"
                     @click="currentTab = tab.id"
-                    @data-updated="updateResult"
                 >
                     <b-card-text>
-                        <component v-bind:is="currentTab"></component>
+                        <component
+                            :rdata="rdata"
+                            @dataUpdated="updateResult"
+                            v-bind:is="currentTab"
+                        />
                     </b-card-text>
                 </b-tab>
             </b-tabs>
@@ -26,57 +28,47 @@
 </template>
 
 <script>
-    import HelloTab from './components/HelloTab'
-    import DeclarerTab from './components/DeclarerTab'
-    import DeduireTab from './components/DeduireTab'
-    import ResultatTab from './components/ResultatTab'
+    import HomeTab         from './components/HomeTab'
+    import DeclarerTab      from './components/DeclarerTab'
+    import DeduireTab       from './components/DeduireTab'
+    import ResultatTab      from './components/ResultatTab'
+    import DataModel        from './data/model.js';
 
     export default {
         name: 'app',
         components: {
-            HelloTab,
+            HomeTab,
             DeclarerTab,
             DeduireTab,
             ResultatTab
         },
         data() {
             return {
-                profile: [],
-                declarer: {
-                    tabId       : "DeclarerTab",
-                    tabTitle    : "A déclarer",
-                    tabColor    : "",
-                    data        :      [],
-                },
-                deduireData: [],
+                rdata: DataModel,
                 tabs: [
                     {
-                        id : "HelloTab",
+                        id : "HomeTab",
                         title: "Hello",
-                        data    : [],
                     },
                     {
                         id : "DeclarerTab",
                         title: "A déclarer",
-                        data    : [],
                     },
                     {
                         id : "DeduireTab",
                         title: "A déduire",
-                        data    : [],
                     },
                     {
                         id : "ResultatTab",
                         title: "Résultat",
-                        data    : [],
                     }
                 ],
-                currentTab: "HelloTab",
+                currentTab: "HomeTab",
             }
         },
         methods: {
             updateResult: function(key, value) {
-                console.log(key + ":" + value);
+                this.rdata[key] = value;
             }
         }
     }

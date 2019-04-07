@@ -1,62 +1,67 @@
 <template>
     <main>
-        <b-form>
+        <b-form @submit="checkForm">
             <b-form-group
                 id="cumulNetImposableGroup"
-                label="Cumul net imposable"
+                :label="cumulNetImposable.title"
                 label-for="cumulNetImposable"
-                :valid-feedback="validFeedback"
-                :invalid-feedback="invalidFeedback"
-                description="Le cumul net imposable est le montant figurant sur
-                votre déclaration préremplie 2018."
+                :description="cumulNetImposable.description"
             >
                 <b-form-input
                   id="cumulNetImposable"
-                  type="number"
+                  name="cumulNetImposable"
+                  type="text"
                   min="0"
-                  required
                   v-model="cumulNetImposable.value"
+                  v-validate="'min_value:0'"
+                  :state="validateState('cumulNetImposable')"
+                  @change="saveData('cumulNetImposable')"
                 />
+              <b-form-invalid-feedback>
+                {{ cumulNetImposable.title }} doit être un montant positif arrondi.
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-group
-                id="nuitesGroup"
-                label="Nuités (Frais d'hébergement)"
-                label-for="nuites"
-                :invalid-feedback="invalidFeedback"
-                :valid-feedback="validFeedback"
-                description="Document fourni par la compagnie avec les EP4 de février."
+              id="nuitesGroup"
+              :label="nuites.title"
+              label-for="nuites"
+              :description="nuites.description"
             >
-                <b-form-input
-                  id="nuites"
-                  type="number"
-                  min="0"
-                  required="required"
-                  v-model="nuites.value"
-                />
+              <b-form-input
+                id="nuites"
+                name="nuites"
+                type="text"
+                min="0"
+                v-model="nuites.value"
+                v-validate="'min_value:0'"
+                :state="validateState('nuites')"
+                @change="saveData('nuites')"
+              />
+              <b-form-invalid-feedback>
+                {{ nuites.title }} doit être un montant positif arrondi.
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-group
-                id="idemnitesSecuGroup"
-                label="Idemnités journalières de la Sécurité Sociale"
-                label-for="idemnitesSecu"
-                v-bind:invalid-feedback="invalidFeedback"
-                v-bind:valid-feedback="validFeedback"
-                :state="state"
-                description="IJ perçues de la Sécurité Sociale pour congés
-                maladie ou maternité ou paternité selon le relevé adressé par
-                la CPAM. Ne jamais déclarer les IJ consécutives à un accident
-                du travail ni celles faisant suite à des affections comportant
-                un traitement prolongé et une thérapeutique particulièrement
-                coûteuse - article L.322-3 du Code de la Sécurité Sociale."
+              id="idemnitesSecuGroup"
+              :label="idemnitesSecu.title"
+              label-for="idemnitesSecu"
+              :description="idemnitesSecu.description"
             >
-                <b-form-input
-                  id="idemnitesSecu"
-                  type="number"
-                  min="0"
-                  required="required"
-                  v-on:input="$emit('data-updated')"
-                  v-model="idemnitesSecu.value" />
+              <b-form-input
+                id="idemnitesSecu"
+                name="idemnitesSecu"
+                type="text"
+                min="0"
+                v-model="idemnitesSecu.value"
+                v-validate="'min_value:0'"
+                :state="validateState('idemnitesSecu')"
+                @change="saveData('idemnitesSecu')"
+              />
+              <b-form-invalid-feedback>
+                {{ idemnitesSecu.title }} doit être un montant positif arrondi.
+              </b-form-invalid-feedback>
             </b-form-group>
         </b-form>
     </main>
@@ -65,32 +70,39 @@
 <script>
 export default {
     name: 'DeclarerTab',
-    data : function() {
-      return {
-        cumulNetImposable: {
-            type: "number",
-            value: 0
-        },
-        nuites: {
-            type: "number",
-            value: 0
-        },
-        idemnitesSecu: {
-            type: "number",
-            value: 0
-        },
-      }
+    props: {
+      rdata: Object
     },
-    computed: {
-        state() {
-            return true;
-        },
-        validFeedback() {
-            return '';
-        },
-        invalidFeedback() {
-            return "Valeur non valide";
+    data : function() {
+      return Object.assign({}, this.rdata.declarer, {});
+    },
+    methods: {
+      checkForm(e) {
+        e.preventDefault();
+      },
+
+      validateState(field) {
+        if (this.veeFields[field]) {
+          console.log(field + " is defined");
+          console.log(field + " is dirty " + this.veeFields[field].dirty);
+          console.log(field + " is validated " + this.veeFields[field].validated);
+          console.log(field + " is changed " + this.veeFields[field].changed);
+        } else {
+          console.log(field + " is not defined");
         }
+        if (this.veeFields[field] && (this.veeFields[field].dirty || this.veeFields[field].validated)) {
+          return !this.errors.has(field);
+        }
+
+        return null;
+      },
+
+      saveData: function(field) {
+        // Save only valid data.
+        if (this.veeFields[field] && this.veeFields[field].validated && !this.errors.has(field)) {
+          this.$emit('dataUpdated', field, this[field]);
+        }
+      }
     }
 }
 </script>

@@ -1,14 +1,15 @@
 <template>
     <main>
-        <table>
-
-        </table>
+        <strong>rdata is : {{ rdata }}</strong>
     </main>
 </template>
 
 <script>
 export default {
-  name: 'ResultatTab'
+  name: 'ResultatTab',
+  props: {
+    rdata: Object
+  },
 }
 </script>
 
