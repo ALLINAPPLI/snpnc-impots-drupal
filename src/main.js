@@ -11,7 +11,6 @@ import App from './App.vue';
 Vue.use(VeeValidate, {
   // Rename the field bag to something other than 'fields' as there is confict
   // with BootstrapVue
-
   fieldsBagName: 'veeFields'
 });
 

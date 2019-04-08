@@ -7,6 +7,7 @@
                     :key="tab.id"
                     :title="tab.title"
                     :active="currentTab == tab.id"
+                    :disabled
                     @click="currentTab = tab.id"
                 >
                     <b-card-text>
