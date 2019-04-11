@@ -16,7 +16,7 @@ Vue.use(VeeValidate, {
 
 Vue.use(BootstrapVue);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 new Vue({
   i18n,

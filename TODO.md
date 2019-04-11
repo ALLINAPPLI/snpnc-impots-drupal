@@ -1,3 +1,8 @@
+# TBD
+
+- disable tabs if compagnie not set
+- disable source map when building
+- modify public path in vue.config.js when building for production
 
 # Gotchas
 

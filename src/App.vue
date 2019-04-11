@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="container">
+    <b-container>
         <b-card no-body>
             <b-tabs card>
                 <b-tab
@@ -7,7 +7,6 @@
                     :key="tab.id"
                     :title="tab.title"
                     :active="currentTab == tab.id"
-                    :disabled
                     @click="currentTab = tab.id"
                 >
                     <b-card-text>
@@ -20,12 +19,7 @@
                 </b-tab>
             </b-tabs>
         </b-card>
-        <footer>
-            <div>
-
-            </div>
-        </footer>
-    </div>
+    </b-container>
 </template>
 
 <script>

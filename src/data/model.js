@@ -54,7 +54,6 @@ export default
       prolongé et une thérapeutique particulièrement coûteuse - article
       L.322-3 du Code de la Sécurité Sociale.`
     },
-    // IND.REPAS et INDEMNITE REPAS
   },
   deduire : {},
   resultat : {},
