@@ -23,51 +23,51 @@
 </template>
 
 <script>
-    import HomeTab         from './components/HomeTab'
-    import DeclarerTab      from './components/DeclarerTab'
-    import DeduireTab       from './components/DeduireTab'
-    import ResultatTab      from './components/ResultatTab'
-    import DataModel        from './data/model.js';
+import HomeTab         from './components/HomeTab'
+import DeclarerTab      from './components/DeclarerTab'
+import DeduireTab       from './components/DeduireTab'
+import ResultatTab      from './components/ResultatTab'
+import DataModel        from './data/model.js';
 
-    export default {
-        name: 'app',
-        components: {
-            HomeTab,
-            DeclarerTab,
-            DeduireTab,
-            ResultatTab
-        },
-        data() {
-            return {
-                model : DataModel,
-                tabs: [
-                    {
-                        id : "HomeTab",
-                        title: "Hello",
-                    },
-                    {
-                        id : "DeclarerTab",
-                        title: "A déclarer",
-                    },
-                    {
-                        id : "DeduireTab",
-                        title: "A déduire",
-                    },
-                    {
-                        id : "ResultatTab",
-                        title: "Résultat",
-                    }
-                ],
-                currentTab: "HomeTab",
-            }
-        },
-        methods: {
-            updateResult: function(context, key, value) {
-                console.log("update result: ", key, value);
-                this.model[context][key] = value;
-            }
+export default {
+    name: 'app',
+    components: {
+        HomeTab,
+        DeclarerTab,
+        DeduireTab,
+        ResultatTab
+    },
+    data() {
+        return {
+            model : DataModel,
+            tabs: [
+                {
+                    id : "HomeTab",
+                    title: "Hello",
+                },
+                {
+                    id : "DeclarerTab",
+                    title: "A déclarer",
+                },
+                {
+                    id : "DeduireTab",
+                    title: "A déduire",
+                },
+                {
+                    id : "ResultatTab",
+                    title: "Résultat",
+                }
+            ],
+            currentTab: "HomeTab",
+        }
+    },
+    methods: {
+        updateResult: function(context, key, value) {
+            console.log("update result: ", key, value);
+            this.model.fields[context][key] = value;
         }
     }
+}
 </script>
 
 <style>

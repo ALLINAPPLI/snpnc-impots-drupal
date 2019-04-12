@@ -63,18 +63,24 @@
                 {{ idemnitesSecu.title }} {{ errorMontant }}
               </b-form-invalid-feedback>
             </b-form-group>
+            <data-table :field="model.fields.declarer.idemnitesRepas" :writable="true"></data-table>
         </b-form>
     </main>
 </template>
 
 <script>
+import DataTable from './DataTable';
+
 export default {
     name: 'DeclarerTab',
+    components: {
+      DataTable
+    },
     props: {
       model: Object
     },
     data : function() {
-      return Object.assign({}, JSON.parse(JSON.stringify(this.model.declarer)), this.model.messages);
+      return Object.assign({}, JSON.parse(JSON.stringify(this.model.fields.declarer)), this.model.messages);
     },
     mounted() {
       this.$validator.validate();
