@@ -1,12 +1,13 @@
 export default
 {
   messages : {
-    errorMontant  : "doit être un montant arrondi supérieur ou égal à 0.",
+    errorMontant  : "un montant arrondi supérieur ou égal à 0 est requis.",
     errorRequired : "est requis."
   },
   fields : {
     profil : {
       compagnie: {
+        id          : "compagnie",
         title       : "Compagnie",
         type        : "string",
         options     : ["Air France", "Autre Compagnie"],
@@ -46,6 +47,9 @@ export default
       idemnitesRepas : {
         id          : "idemnitesRepas",
         type        : "table",
+        title : 'Idemnités répas',
+        description : `Reportez les lignes 241 et 340 ou les colonnes 'Ventilation
+        PN imposable' et 'PN non imposable' sur les EP4 de l´année.`,
         columns : [
           {
             key: "id240",
@@ -57,10 +61,7 @@ export default
             title : "id241",
             value : []
           }
-        ],
-        title : 'Idemnités répas',
-        description : `Reportez les lignes 241 et 340 ou les colonnes 'Ventilation
-        PN imposable' et 'PN non imposable' sur les EP4 de l´année.`
+        ]
       }
     },
     deduire : {}

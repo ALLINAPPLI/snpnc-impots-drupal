@@ -1,37 +1,62 @@
 <template>
+  <div class="table-responsive">
+    <div v-if="writable === true">
+      <p>{{ field.description }}</p>
+    </div>
+    <div v-if="writable === false">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th v-for="column in columns" :key="column.key" scope="col">{{ column.title }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr scope="row">
+            <td>Sous-total</td>
+            <td v-for="(column, index) in columns" :key="column.key">
+              {{ field.columns[index].value.reduce((sum, a) => sum + a ) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Mois</th>
+          <th v-for="column in columns" :key="column.key" scope="col">{{ column.title }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="month in months" :key="month.key">
+          <td>{{ month.title }}</td>
+          <td v-for="(column, index) in columns" :key="column.key">
+            <div v-if="writable === true" class="form-group">
+              <input
+                class="form-control"
+                v-bind:class="[errors.has(`${column.key}-${month.key}`) ? 'is-invalid' : 'is-valid']"
+                type="number"
+                :tabindex="(index * 12) + month.key"
+                :name="`${column.key}-${month.key}`"
+                v-model="column.value[month.key]"
+                v-validate="'required|min_value:0'"
+                v-on:focus="focus"
+                v-on:change="save(column.key, month.key, $event)"
+              >
+              <div class="invalid-feedback">
+                un montant arrondi supérieur ou égal à 0 est requis
+              </div>
+            </div>
+            <div v-else>
+              {{ column.value[month.key] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Mois</th>
-        <th v-for="column in columns" scope="col">{{ column.title }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(month, rowIndex) in months">
-        <td>{{ month.title }}</td>
-        <td v-for="(column, colIndex) in columns">
-          <div v-if="writable === true" class="form-group">
-            <input
-              class="form-control"
-              type="number"
-              :tabindex="(colIndex * 12) + month.key"
-              :name="`${column.key}-${month.key}`"
-              v-model="column.value[month.key]"
-              v-validate="'required|min_value:0'"
-              v-on:focus="focus"
-              v-on:blur="blur"
-              :state="validate(`${column.key}-${month.key}`)"
-              v-on:change="change(colIndex, month.key)"
-            >
-          </div>
-          <div v-else>
-            {{ column.value[month.key] }}
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </template>
 <script>
 export default {
@@ -56,16 +81,22 @@ export default {
       {key : 12, title : "Décembre"}
     ]
 
-
+    // If values are empty initialize with 0.
     let columns = this.field.columns;
-    // Initialize values if empty.
     for(let column of columns) {
       for (let i = 1; i <= 12; i++) {
-        if (column.value[i] === undefined) {
+        if (
+          column.value[i] === undefined ||
+          column.value[i] === ""  ||
+          column.value[i] === null
+          ) {
           column.value[i] = 0;
         }
       }
     }
+    // Deep clone.
+    let field = JSON.parse(JSON.stringify(this.field));
+    columns = field.columns;
 
     return {
       months,
@@ -73,26 +104,22 @@ export default {
     }
   },
   methods: {
+    mounted() {
+      // if (this.writable) {
+      //   this.$validator.validate();
+      // }
+    },
     focus(event) {
+      // Select all field data for easy editing.
       event.target.select();
     },
-    blur(event) {
-      if (event.target.value === "") {
-        event.target.value = 0;
-      }
-    },
-    validate(field) {
-      // console.log("validating : " + field);
-    },
-    change(column, key) {
-      // console.log("col : " + column + " key : " + key);
-      // if (this.field.columns[column].value[key] === "") {
-      //   this.field.columns[column].value[key] = 0;
-      // }
+    save(column, month, event) {
+      let field = `${column}-${month}`;
       // Save only valid data.
-      // if (this.veeFields[field] && this.veeFields[field].validated && !this.errors.has(field)) {
-      //   this.$emit('dataUpdated', "declarer", field, this[field]);
-      // }
+      if (this.veeFields[field] && this.veeFields[field].validated && !this.errors.has(field)) {
+        let valueColumn = this.field.columns.find((item) => item.key === column);
+        valueColumn.value[month] = parseInt(event.target.value);
+      }
     }
   }
 }

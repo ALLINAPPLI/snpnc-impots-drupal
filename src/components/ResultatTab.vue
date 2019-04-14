@@ -1,8 +1,8 @@
 <template>
   <main>
-    <div v-for="(context, index) in model.fields">
+    <div v-for="(context, index) in model.fields" :key="context.index">
       <h1>{{ index }}</h1>
-      <dl v-for="item in context">
+      <dl v-for="item in context" :key="item.id">
         <dt>{{ item.title }}</dt>
         <dd>
           <div v-if="item.type === 'string'">
