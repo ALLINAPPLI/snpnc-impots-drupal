@@ -57,9 +57,6 @@ export default {
     // return Object.assign({}, JSON.parse(JSON.stringify(this.model.fields.profil)), this.model.messages);
     return Object.assign({}, this.model.fields.profil, this.model.messages);
   },
-  mounted() {
-    this.$validator.validate();
-  },
 }
 </script>
 

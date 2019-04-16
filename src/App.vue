@@ -1,25 +1,26 @@
 <template>
-    <b-container>
-        <b-card no-body>
-            <b-tabs card>
-                <b-tab
-                    v-for="tab in tabs"
-                    :key="tab.id"
-                    :title="tab.title"
-                    :active="currentTab == tab.id"
-                    @click="currentTab = tab.id"
-                >
-                    <b-card-text>
-                        <component
-                            :model="model"
-                            @dataUpdated="updateResult"
-                            v-bind:is="currentTab"
-                        />
-                    </b-card-text>
-                </b-tab>
-            </b-tabs>
-        </b-card>
-    </b-container>
+  <div class="container">
+    <b-card no-body>
+        <b-tabs card>
+            <b-tab
+                v-for="tab in tabs"
+                :key="tab.id"
+                :title="tab.title"
+                :active="currentTab == tab.id"
+                :disabled="tab.disabled"
+                @click="currentTab = tab.id"
+            >
+                <b-card-text>
+                    <component
+                        :model="model"
+                        @dataUpdated="updateResult"
+                        v-bind:is="currentTab"
+                    />
+                </b-card-text>
+            </b-tab>
+        </b-tabs>
+    </b-card>
+  </div>
 </template>
 
 <script>
@@ -40,33 +41,46 @@ export default {
     data() {
         return {
             model : DataModel,
+            compagnie : DataModel.profil.compagnie.value,
             tabs: [
                 {
                     id : "HomeTab",
                     title: "Hello",
+                    disabled: false
                 },
                 {
                     id : "DeclarerTab",
                     title: "A déclarer",
+                    disabled: true
                 },
                 {
                     id : "DeduireTab",
                     title: "A déduire",
+                    disabled: true
                 },
                 {
                     id : "ResultatTab",
                     title: "Résultat",
+                    disabled: true
                 }
             ],
             currentTab: "HomeTab",
         }
     },
+    watch: {
+        compagnie() {
+            if ( this.model.profil.compagnie.value !== "" ) {
+                this.tabs.
+            }
+        }
+    }
     methods: {
         updateResult: function(context, key, value) {
             console.log("update result: ", key, value);
             this.model.fields[context][key] = value;
         }
-    }
+    },
+
 }
 </script>
 

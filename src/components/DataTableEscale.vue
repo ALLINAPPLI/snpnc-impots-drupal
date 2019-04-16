@@ -59,30 +59,13 @@
 
 </template>
 <script>
-
 export default {
-  name: "DataTable",
+  name: "DataTableEscale",
   props: {
     writable: Boolean,
     field: Object
   },
   data() {
-
-    const months = [
-      {key :  1, title : "Janvier"},
-      {key :  2, title : "Février"},
-      {key :  3, title : "Mars"},
-      {key :  4, title : "Avril"},
-      {key :  5, title : "Mai"},
-      {key :  6, title : "Juin"},
-      {key :  7, title : "Juillet"},
-      {key :  8, title : "Août"},
-      {key :  9, title : "Septembre"},
-      {key : 10, title : "Octobre"},
-      {key : 11, title : "Novembre"},
-      {key : 12, title : "Décembre"}
-    ]
-
     // If values are empty initialize with 0.
     let columns = this.field.columns;
     for(let column of columns) {

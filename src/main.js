@@ -15,7 +15,6 @@ Vue.use(VeeValidate, {
 });
 
 Vue.use(BootstrapVue);
-
 Vue.config.productionTip = true;
 
 new Vue({
