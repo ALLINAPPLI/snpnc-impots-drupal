@@ -1,23 +1,28 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import BootstrapVue from 'bootstrap-vue';
-import i18n from './i18n';
-import VeeValidate from 'vee-validate';
+import { ValidationProvider,localize } from 'vee-validate';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+// Activate the French locale for form validation.
+localize('fr');
 
 import App from './App.vue';
 
-Vue.use(VeeValidate, {
-  // Rename the field bag to something other than 'fields' as there is confict
-  // with BootstrapVue
-  fieldsBagName: 'veeFields'
+import './assets/styles.scss';
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.use(BootstrapVue);
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    started: false,
+    compagnie: null
+  },
+  strict: process.env.NODE_ENV !== 'production'
 });
 
-Vue.use(BootstrapVue);
-Vue.config.productionTip = true;
-
 new Vue({
-  i18n,
+  store,
   render: h => h(App)
 }).$mount('#app')

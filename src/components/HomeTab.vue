@@ -15,9 +15,9 @@
         </p>
         <p>
           <strong>
-            NB : L'utilisation de cet outil informatique ne saurait engager la
-        responsabilité du SNPNC, si des erreurs ou omissions étaient relevées
-        par l'administration.
+          NB : L'utilisation de cet outil informatique ne saurait engager la
+          responsabilité du SNPNC, si des erreurs ou omissions étaient relevées
+          par l'administration.
           </strong>
         </p>
       </b-col>
@@ -26,21 +26,21 @@
     <b-row class="mt-3">
       <b-col>
         <b-form-group
-          :label="compagnie.title"
-          :label-for="compagnie.id"
-          :description="compagnie.description"
+          label="Compagnie"
+          label-for="compagnieField"
+          description="Merci d'indiquer votre compagnie afin d'ajuster le formulaire à vos spécificités compagnie."
         >
           <b-form-select
-            :id="compagnie.id"
-            :name="compagnie.id"
-            v-model="compagnie.value"
-            :options="compagnie.options"
+            id="compagnieField"
+            name="compagnieField"
+            v-model="compagnie"
+            :options="compagnieOptions"
             required
           ></b-form-select>
-        <b-form-invalid-feedback>
-          {{ compagnie.title }} {{ errorRequired }}
-        </b-form-invalid-feedback>
-
+          <b-button :disabled="" variant="primary">
+          <b-form-invalid-feedback>
+            invalid man !
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-col>
     </b-row>
@@ -48,15 +48,30 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'HomeTab',
   props: {
     model: Object
   },
   data() {
+    return {
+      compagnieOptions: [
+          { value : null, text: `Sélectionnez votre compagnie` },
+          { value : "af", text : `Air France` },
+          { value : "autre", text : `Autre Compagnie` }
+      ]
+    }
     // return Object.assign({}, JSON.parse(JSON.stringify(this.model.fields.profil)), this.model.messages);
-    return Object.assign({}, this.model.fields.profil, this.model.messages);
+    // return Object.assign({}, this.model.fields.profil, this.model.messages);
   },
+  computed: {
+    ...mapState({
+      compagnie: state => state.compagnie,
+      started: state => state.started,
+    })
+  }
 }
 </script>
 

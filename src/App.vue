@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import HomeTab         from './components/HomeTab'
+import HomeTab          from './components/HomeTab'
 import DeclarerTab      from './components/DeclarerTab'
 import DeduireTab       from './components/DeduireTab'
 import ResultatTab      from './components/ResultatTab'
@@ -41,7 +41,7 @@ export default {
     data() {
         return {
             model : DataModel,
-            compagnie : DataModel.profil.compagnie.value,
+            compagnie : DataModel.fields.profil.compagnie.value,
             tabs: [
                 {
                     id : "HomeTab",
@@ -69,11 +69,12 @@ export default {
     },
     watch: {
         compagnie() {
-            if ( this.model.profil.compagnie.value !== "" ) {
-                this.tabs.
-            }
+            console.log("compagnie changed");
+            // if ( this.model.fields.profil.compagnie.value !== "" ) {
+            //     this.tabs.forEach( () => { console.log(this); });
+            // }
         }
-    }
+    },
     methods: {
         updateResult: function(context, key, value) {
             console.log("update result: ", key, value);
