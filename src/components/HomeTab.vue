@@ -33,14 +33,18 @@
           <b-form-select
             id="compagnieField"
             name="compagnieField"
-            v-model="compagnie"
+            :value="compagnie"
+            @change="updateCompagnie"
             :options="compagnieOptions"
             required
           ></b-form-select>
-          <b-button :disabled="" variant="primary">
           <b-form-invalid-feedback>
             invalid man !
           </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group>
+          <b-button id="start" :disabled="!canStart" @click="toggleStarted">Démarrer</b-button>
+          <b-button id="reset" :disabled="canStart">Reinitializer</b-button>
         </b-form-group>
       </b-col>
     </b-row>
@@ -48,7 +52,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'HomeTab',
@@ -63,14 +67,26 @@ export default {
           { value : "autre", text : `Autre Compagnie` }
       ]
     }
-    // return Object.assign({}, JSON.parse(JSON.stringify(this.model.fields.profil)), this.model.messages);
-    // return Object.assign({}, this.model.fields.profil, this.model.messages);
   },
   computed: {
     ...mapState({
-      compagnie: state => state.compagnie,
-      started: state => state.started,
-    })
+      compagnie: state => state.global.compagnie,
+      started: state => state.global.started,
+    }),
+    canStart() {
+      return this.compagnie !== null || !this.started;
+    }
+  },
+  methods: {
+    ...mapMutations(['toggleStarted', 'updateCompagnie']),
+    ...mapActions([
+      'startForm',
+      ''
+    ]),
+    // updateCompagnie (value) {
+    //   this.$store.commit('updateCompagnie', value);
+    // },
+    startForm () { }
   }
 }
 </script>

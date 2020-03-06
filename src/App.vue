@@ -6,16 +6,12 @@
                 v-for="tab in tabs"
                 :key="tab.id"
                 :title="tab.title"
-                :active="currentTab == tab.id"
+                :active="activeTab == tab.id"
                 :disabled="tab.disabled"
-                @click="currentTab = tab.id"
+                @click="setActiveTab"
             >
                 <b-card-text>
-                    <component
-                        :model="model"
-                        @dataUpdated="updateResult"
-                        v-bind:is="currentTab"
-                    />
+                    <component v-bind:is="activeTab"/>
                 </b-card-text>
             </b-tab>
         </b-tabs>
@@ -24,11 +20,13 @@
 </template>
 
 <script>
-import HomeTab          from './components/HomeTab'
-import DeclarerTab      from './components/DeclarerTab'
-import DeduireTab       from './components/DeduireTab'
-import ResultatTab      from './components/ResultatTab'
-import DataModel        from './data/model.js';
+
+import HomeTab from './components/HomeTab'
+import DeclarerTab from './components/DeclarerTab'
+import DeduireTab from './components/DeduireTab'
+import ResultatTab from './components/ResultatTab'
+
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     name: 'app',
@@ -38,48 +36,19 @@ export default {
         DeduireTab,
         ResultatTab
     },
-    data() {
-        return {
-            model : DataModel,
-            compagnie : DataModel.fields.profil.compagnie.value,
-            tabs: [
-                {
-                    id : "HomeTab",
-                    title: "Hello",
-                    disabled: false
-                },
-                {
-                    id : "DeclarerTab",
-                    title: "A déclarer",
-                    disabled: true
-                },
-                {
-                    id : "DeduireTab",
-                    title: "A déduire",
-                    disabled: true
-                },
-                {
-                    id : "ResultatTab",
-                    title: "Résultat",
-                    disabled: true
-                }
-            ],
-            currentTab: "HomeTab",
-        }
+    computed: {
+      ...mapState({
+        tabs: state => state.global.tabs,
+        activeTab: state => state.global.activeTab,
+        compagnie: state => state.global.compagnie,
+        started: state => state.global.started
+      })
     },
     watch: {
-        compagnie() {
-            console.log("compagnie changed");
-            // if ( this.model.fields.profil.compagnie.value !== "" ) {
-            //     this.tabs.forEach( () => { console.log(this); });
-            // }
-        }
+
     },
     methods: {
-        updateResult: function(context, key, value) {
-            console.log("update result: ", key, value);
-            this.model.fields[context][key] = value;
-        }
+      ...mapMutations(['setActiveTab'])
     },
 
 }
