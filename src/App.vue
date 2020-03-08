@@ -8,11 +8,9 @@
                 :title="tab.title"
                 :active="activeTab == tab.id"
                 :disabled="tab.disabled"
-                @click="setActiveTab"
+                @click="setActiveTab(tab.id)"
             >
-                <b-card-text>
-                    <component v-bind:is="activeTab"/>
-                </b-card-text>
+                <b-card-text><component v-bind:is="activeTab"/></b-card-text>
             </b-tab>
         </b-tabs>
     </b-card>
@@ -54,25 +52,3 @@ export default {
 }
 </script>
 
-<style>
-
-/* Form element description is in small el, by default it's 80% which is not
-very readable */
-.form-group small {
-    font-size: 100%;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -moz-appearance: inherit;
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-    -webkit-appearance: textfield;
-}
-</style>

@@ -28,7 +28,8 @@
         <b-form-group
           label="Compagnie"
           label-for="compagnieField"
-          description="Merci d'indiquer votre compagnie afin d'ajuster le formulaire à vos spécificités compagnie."
+          description="Merci d'indiquer votre compagnie afin d'ajuster le
+          formulaire à vos spécificités compagnie."
         >
           <b-form-select
             id="compagnieField"
@@ -43,7 +44,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group>
-          <b-button id="start" :disabled="!canStart" @click="toggleStarted">Démarrer</b-button>
+          <b-button id="start" :disabled="!canStart" @click="startForm">Démarrer</b-button>
           <b-button id="reset" :disabled="canStart">Reinitializer</b-button>
         </b-form-group>
       </b-col>
@@ -56,9 +57,6 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'HomeTab',
-  props: {
-    model: Object
-  },
   data() {
     return {
       compagnieOptions: [
@@ -74,19 +72,12 @@ export default {
       started: state => state.global.started,
     }),
     canStart() {
-      return this.compagnie !== null || !this.started;
+      return this.compagnie !== null && !this.started;
     }
   },
   methods: {
-    ...mapMutations(['toggleStarted', 'updateCompagnie']),
-    ...mapActions([
-      'startForm',
-      ''
-    ]),
-    // updateCompagnie (value) {
-    //   this.$store.commit('updateCompagnie', value);
-    // },
-    startForm () { }
+    ...mapMutations(['updateCompagnie']),
+    ...mapActions(['startForm']),
   }
 }
 </script>

@@ -27,7 +27,12 @@ export default {
     activeTab: "HomeTab",
   },
   getters: {},
-  actions: {},
+  actions: {
+    startForm ( {commit} ) {
+      commit('setActiveTab', 'DeclarerTab')
+      commit('toggleStarted')
+    }
+  },
   mutations: {
     updateCompagnie (state, value) {
       state.compagnie = value

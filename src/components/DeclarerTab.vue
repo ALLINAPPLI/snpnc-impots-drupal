@@ -1,100 +1,63 @@
 <template>
     <main>
-      <div class="form-group">
-        <label :for="cumulNetImposable.id">{{ cumulNetImposable.title }}</label>
-        <input
-          type="number"
-          class="form-control"
-          v-bind:class="[errors.has(cumulNetImposable.id) ? 'is-invalid' : 'is-valid']"
-          :id="cumulNetImposable.id"
-          :name="cumulNetImposable.id"
-          min="0"
-          v-model="cumulNetImposable.value"
-          v-validate="'required|min_value:0'"
-          v-on:focus="focus"
-          v-on:change="save(cumulNetImposable.id, $event)"
-        >
-        <div class="invalid-feedback">
-          {{ cumulNetImposable.title }} {{ errorMontant }}
-        </div>
-        <small class="form-text">{{ cumulNetImposable.description }}</small>
-      </div>
-      <div class="form-group">
-        <label :for="fraisHebergement.id">{{ fraisHebergement.title }}</label>
-        <input
-          type="number"
-          class="form-control"
-          v-bind:class="[errors.has(fraisHebergement.id) ? 'is-invalid' : 'is-valid']"
-          :id="fraisHebergement.id"
-          :name="fraisHebergement.id"
-          min="0"
-          v-model="fraisHebergement.value"
-          v-validate="'required|min_value:0'"
-          v-on:focus="focus"
-          v-on:change="save(fraisHebergement.id, $event)"
-        >
-        <div class="invalid-feedback">
-          {{ fraisHebergement.title }} {{ errorMontant }}
-        </div>
-        <small class="form-text">{{ fraisHebergement.description }}</small>
-      </div>
+        <ValidationProvider :name="f.cNI.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+          <b-form-group :id="f.cNI.id + '-group' " :label="f.cNI.label" :label-for="f.cNI.id">
+            <b-form-text :id="f.cNI.id + '-help'">{{ f.cNI.description }}</b-form-text>
+            <b-form-input :id="f.cNI.id" v-model="cNI" :state="getValidationState(vCtx)" :placeholder="f.cNI.label"/>
+            <b-form-invalid-feedback :id="f.cNI.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+          </b-form-group>
+        </ValidationProvider>
 
-      <div class="form-group">
-        <label :for="idemnitesSecu.id">{{ idemnitesSecu.title }}</label>
-        <input
-          type="number"
-          class="form-control"
-          v-bind:class="[errors.has(idemnitesSecu.id) ? 'is-invalid' : 'is-valid']"
-          :id="idemnitesSecu.id"
-          :name="idemnitesSecu.id"
-          min="0"
-          v-model="idemnitesSecu.value"
-          v-validate="'required|min_value:0'"
-          v-on:focus="focus"
-          v-on:change="save(idemnitesSecu.id, $event)"
-        >
-        <div class="invalid-feedback">
-          {{ idemnitesSecu.title }} {{ errorMontant }}
-        </div>
-        <small class="form-text">{{ idemnitesSecu.description }}</small>
-      </div>
-      <data-table :field="model.fields.declarer.idemnitesRepas" :writable="true"></data-table>
-      <data-table :field="model.fields.declarer.idemnitesTransport" :writable="true"></data-table>
-    </main>
+        <ValidationProvider :name="f.fH.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+          <b-form-group :id="f.fH.id + '-group' " :label="f.fH.label" :label-for="f.fH.id">
+            <b-form-text :id="f.fH.id + '-help'">{{ f.fH.description }}</b-form-text>
+            <b-form-input :id="f.fH.id" v-model="fH" :state="getValidationState(vCtx)" :placeholder="f.fH.label"/>
+            <b-form-invalid-feedback :id="f.fH.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+          </b-form-group>
+        </ValidationProvider>
+
+        <ValidationProvider :name="f.iS.label.toLowerCase()" rules="required|numeric|min:1|min_value:0" v-slot="vCtx">
+          <b-form-group :id="f.iS.id + '-group' " :label="f.iS.label" :label-for="f.iS.id">
+            <b-form-text :id="f.iS.id + '-help'">{{ f.iS.description }}</b-form-text>
+            <b-form-input :id="f.iS.id" v-model="iS" :state="getValidationState(vCtx)" :placeholder="f.iS.label"/>
+            <b-form-invalid-feedback :id="f.iS.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+          </b-form-group>
+        </ValidationProvider>
+
+        <b-form-group :id="f.iR.id + '-group' " :label="f.iR.label" :label-for="f.iR.id">
+          <MonthlyTable :id="f.iR.id" v-bind:edit="true" v-bind:field="f.iR"></MonthlyTable>
+        </b-form-group>
+  </main>
 </template>
 
 <script>
-import DataTable from './DataTable';
+// import { mapState, mapActions, mapMutations } from 'vuex';
+// import { mapMutations } from 'vuex';
+import fields from '../model/declarer';
+import { mapBasicFields } from '../util';
+import MonthlyTable from './MonthlyTable';
 
 export default {
   name: 'DeclarerTab',
   components: {
-    DataTable
+    MonthlyTable,
   },
-  props: {
-    model: Object
+  data() {
+    return { f : fields };
   },
-  data : function() {
-    return Object.assign({}, JSON.parse(JSON.stringify(this.model.fields.declarer)), this.model.messages);
-  },
-  mounted() {
-    this.$validator.validate();
+  computed: {
+    ...mapBasicFields({
+      fields: ["cNI", "fH", "iS", "iR"],
+      base: "declarer",
+      mutation: "updateBasicField"
+    }),
   },
   methods: {
-    focus(event) {
-      // Select all field data for easy editing.
-      event.target.select();
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
     },
-    save(field, event) {
-      // Save only valid data.
-      if (this.veeFields[field] && this.veeFields[field].validated && !this.errors.has(field)) {
-        this.model.fields.declarer[field].value = parseInt(event.target.value);
-      }
-    }
   }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
