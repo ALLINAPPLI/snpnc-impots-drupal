@@ -14,4 +14,6 @@ function mapBasicFields(options) {
   return object;
 }
 
-export { mapBasicFields }
+export {
+  mapBasicFields
+}

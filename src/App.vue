@@ -42,13 +42,9 @@ export default {
         started: state => state.global.started
       })
     },
-    watch: {
-
-    },
     methods: {
       ...mapMutations(['setActiveTab'])
     },
-
 }
 </script>
 

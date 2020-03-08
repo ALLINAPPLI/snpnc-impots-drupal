@@ -4,10 +4,18 @@
       <template v-slot:table-caption>{{ field.description }}</template>
       <template v-if="edit" v-slot:cell()="row">
         <slot v-if="row.field.key === 'month'">{{ row.value }}</slot>
-        <b-form-input
-          v-else
-          v-model="row.item[row.field.key]"
-          @change="update(row.field.key, row.index, $event)"/>
+        <ValidationProvider v-else
+          :name="row.field.label"
+          rules="required|numeric|min:1|min_value:0"
+          v-slot="vCtx">
+          <b-form-input
+            v-model="row.item[row.field.key]"
+            @change="updateValue(row.field.key, row.index, $event)"
+            :state="getValidationState(vCtx)"
+          />
+          <b-form-invalid-feedback>{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+        </ValidationProvider>
+
       </template>
     </b-table>
   </main>
@@ -21,26 +29,16 @@ export default {
   name: "MonthlyTable",
   props: {
     edit: Boolean,
+    value: Object,
     field: Object
     // base:
   },
   data() {
-    // let field = {
-    //     id          : "idemnitesRepas",
-    //     label       : "Idemnités répas",
-    //     description : `Reportez les lignes 241 et 340 ou les colonnes 'Ventilation
-    //     PN imposable' et 'PN non imposable' sur les EP4 de l´année.`,
-    //     columns : [
-    //       { key: "ir241", label : "241" },
-    //       { key: "ir340", label : "340" }
-    //     ]
-    // };
-
     let items = [];
     for(let i = 0; i <= 11; i++) {
       let item = { 'month' : date.months[i] };
       for(let j = 0; j < this.field.columns.length; j++) {
-        item[this.field.columns[j].key] = 0;
+        item[this.field.columns[j].key] = this.value[this.field.columns[j].key][i];
       }
       items.push(item);
     }
@@ -49,8 +47,11 @@ export default {
     return { items, fields };
   },
   methods: {
-    update(key, index, value) {
-      console.log(key, index, value);
+    updateValue(column, index, value) {
+      this.$emit('input', { column, index, value });
+    },
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
     },
   }
 

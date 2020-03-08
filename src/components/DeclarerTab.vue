@@ -1,38 +1,54 @@
 <template>
     <main>
-        <ValidationProvider :name="f.cNI.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
-          <b-form-group :id="f.cNI.id + '-group' " :label="f.cNI.label" :label-for="f.cNI.id">
-            <b-form-text :id="f.cNI.id + '-help'">{{ f.cNI.description }}</b-form-text>
-            <b-form-input :id="f.cNI.id" v-model="cNI" :state="getValidationState(vCtx)" :placeholder="f.cNI.label"/>
-            <b-form-invalid-feedback :id="f.cNI.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
+      <b-card>
+        <b-tabs card fill>
+          <b-tab title="Général" active><b-card-text>
+            <ValidationProvider :name="f.cNI.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+              <b-form-group :id="f.cNI.id + '-group' " :label="f.cNI.label" :label-for="f.cNI.id">
+                <b-form-text :id="f.cNI.id + '-help'">{{ f.cNI.description }}</b-form-text>
+                <b-form-input :id="f.cNI.id" v-model="cNI" :state="getValidationState(vCtx)"/>
+                <b-form-invalid-feedback :id="f.cNI.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
 
-        <ValidationProvider :name="f.fH.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
-          <b-form-group :id="f.fH.id + '-group' " :label="f.fH.label" :label-for="f.fH.id">
-            <b-form-text :id="f.fH.id + '-help'">{{ f.fH.description }}</b-form-text>
-            <b-form-input :id="f.fH.id" v-model="fH" :state="getValidationState(vCtx)" :placeholder="f.fH.label"/>
-            <b-form-invalid-feedback :id="f.fH.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
+            <ValidationProvider :name="f.fH.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+              <b-form-group :id="f.fH.id + '-group' " :label="f.fH.label" :label-for="f.fH.id">
+                <b-form-text :id="f.fH.id + '-help'">{{ f.fH.description }}</b-form-text>
+                <b-form-input :id="f.fH.id" v-model="fH" :state="getValidationState(vCtx)"/>
+                <b-form-invalid-feedback :id="f.fH.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
 
-        <ValidationProvider :name="f.iS.label.toLowerCase()" rules="required|numeric|min:1|min_value:0" v-slot="vCtx">
-          <b-form-group :id="f.iS.id + '-group' " :label="f.iS.label" :label-for="f.iS.id">
-            <b-form-text :id="f.iS.id + '-help'">{{ f.iS.description }}</b-form-text>
-            <b-form-input :id="f.iS.id" v-model="iS" :state="getValidationState(vCtx)" :placeholder="f.iS.label"/>
-            <b-form-invalid-feedback :id="f.iS.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
-          </b-form-group>
-        </ValidationProvider>
+            <ValidationProvider :name="f.iS.label.toLowerCase()" rules="required|numeric|min:1|min_value:0" v-slot="vCtx">
+              <b-form-group :id="f.iS.id + '-group' " :label="f.iS.label" :label-for="f.iS.id">
+                <b-form-text :id="f.iS.id + '-help'">{{ f.iS.description }}</b-form-text>
+                <b-form-input :id="f.iS.id" v-model="iS" :state="getValidationState(vCtx)"/>
+                <b-form-invalid-feedback :id="f.iS.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
 
-        <b-form-group :id="f.iR.id + '-group' " :label="f.iR.label" :label-for="f.iR.id">
-          <MonthlyTable :id="f.iR.id" v-bind:edit="true" v-bind:field="f.iR"></MonthlyTable>
-        </b-form-group>
+          </b-card-text></b-tab>
+          <b-tab :title="f.iR.label"><b-card-text>
+
+            <b-form-group :id="f.iR.id + '-group' " :label="f.iR.label" :label-for="f.iR.id">
+              <MonthlyTable :id="f.iR.id" v-bind:edit="true" v-model="iR" v-bind:field="f.iR"></MonthlyTable>
+            </b-form-group>
+
+          </b-card-text></b-tab>
+          <b-tab :title="f.iT.label"><b-card-text>
+
+            <b-form-group :id="f.iT.id + '-group' " :label="f.iT.label" :label-for="f.iT.id">
+              <MonthlyTable :id="f.iT.id" v-bind:edit="true" v-model="iT" v-bind:field="f.iT"></MonthlyTable>
+            </b-form-group>
+
+          </b-card-text></b-tab>
+
+        </b-tabs>
+      </b-card>
   </main>
 </template>
 
 <script>
-// import { mapState, mapActions, mapMutations } from 'vuex';
-// import { mapMutations } from 'vuex';
 import fields from '../model/declarer';
 import { mapBasicFields } from '../util';
 import MonthlyTable from './MonthlyTable';
@@ -47,10 +63,26 @@ export default {
   },
   computed: {
     ...mapBasicFields({
-      fields: ["cNI", "fH", "iS", "iR"],
+      fields: ["cNI", "fH", "iS"],
       base: "declarer",
       mutation: "updateBasicField"
     }),
+    iR: {
+      get() {
+        return this.$store.state.declarer.iR;
+      },
+      set(payload) {
+        this.$store.commit("updateTableField", { field: 'iR', ...payload });
+      }
+    },
+    iT: {
+      get() {
+        return this.$store.state.declarer.iT;
+      },
+      set(payload) {
+        this.$store.commit("updateTableField", { field: 'iT', ...payload });
+      }
+    },
   },
   methods: {
     getValidationState({ dirty, validated, valid = null }) {

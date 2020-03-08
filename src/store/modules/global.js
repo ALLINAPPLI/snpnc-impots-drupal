@@ -5,7 +5,7 @@ export default {
     tabs: [
         {
             id : "HomeTab",
-            title: "Hello",
+            title: "Compagnie",
             disabled: false
         },
         {
