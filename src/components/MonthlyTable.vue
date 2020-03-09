@@ -1,7 +1,7 @@
 <template>
   <main>
     <b-table caption-top :items="items" :fields="fields">
-      <template v-slot:table-caption>{{ field.description }}</template>
+      <template v-if="field.description.length" v-slot:table-caption>{{ field.description }}</template>
       <template v-if="edit" v-slot:cell()="row">
         <slot v-if="row.field.key === 'month'">{{ row.value }}</slot>
         <ValidationProvider v-else
@@ -23,7 +23,7 @@
 
 <script>
 
-import date from '../store/date';
+import date from '../model/date';
 
 export default {
   name: "MonthlyTable",

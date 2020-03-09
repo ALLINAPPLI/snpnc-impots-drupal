@@ -34,6 +34,16 @@ export default {
     }
   },
   mutations: {
+    updateBasicField(state, payload) {
+      for (let key in payload) {
+        state[key] = payload[key];
+      }
+    },
+    updateTableField(state, payload) {
+      let { field, column, index, value} = payload;
+      state[field][column][index] = value;
+    },
+
     updateCompagnie (state, value) {
       state.compagnie = value
     },

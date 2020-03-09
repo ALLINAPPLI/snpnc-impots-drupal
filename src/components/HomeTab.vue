@@ -1,6 +1,6 @@
 <template>
-  <b-container class="bv-example-row">
-    <b-row>
+  <b-container>
+    <b-row class="mt-3">
       <b-col>
         <b-img rounded fluid :src="require('../assets/logo.png')"></b-img>
       </b-col>

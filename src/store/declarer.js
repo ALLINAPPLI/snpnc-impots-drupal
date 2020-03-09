@@ -21,11 +21,13 @@ export default {
   actions: {},
   mutations: {
     updateBasicField(state, payload) {
+      // let { store, field, value} = payload;
       for (let key in payload) {
         state[key] = payload[key];
       }
     },
     updateTableField(state, payload) {
+      console.log('declarer');
       let { field, column, index, value} = payload;
       state[field][column][index] = value;
     }

@@ -5,8 +5,10 @@ import { ValidationProvider, extend, localize } from "vee-validate";
 import fr from "vee-validate/dist/locale/fr.json";
 import * as rules from "vee-validate/dist/rules";
 import App from './App.vue';
-import globalStore from './store/modules/global';
-import declarerStore from './store/modules/declarer';
+import globalStore from './store/global';
+import declarerStore from './store/declarer';
+import deduireStore from './store/deduire';
+import resultatStore from './store/resultat';
 import './assets/styles.scss';
 
 // Install VeeValidate rules and localization
@@ -24,7 +26,9 @@ Vue.use(BootstrapVue);
 const store = new Vuex.Store({
   modules: {
     global: globalStore,
-    declarer: declarerStore
+    declarer: declarerStore,
+    deduire: deduireStore,
+    resultat: resultatStore
   }
 });
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <b-container>
     <b-card no-body>
         <b-tabs card>
-            <b-tab
+            <b-tab no-body
                 v-for="tab in tabs"
                 :key="tab.id"
                 :title="tab.title"
@@ -14,7 +14,7 @@
             </b-tab>
         </b-tabs>
     </b-card>
-  </div>
+  </b-container>
 </template>
 
 <script>
