@@ -1,51 +1,28 @@
 <template>
   <b-container>
     <b-row class="mt-3">
-      <b-col>
-        <b-img rounded fluid :src="require('../assets/logo.png')"></b-img>
-      </b-col>
-      <b-col cols="9">
-        <p>
-          Le calcul de vos frais réels est facilité et optimisé par
-          ce logiciel que vous propose le SNPNC. Il permet d'effectuer des simulations
-          personnalisées et d'imprimer le détail des montants à déclarer AJ ou BJ ainsi
-          que les montants à déduire AK ou BK. La méthode de déclaration des frais
-          réels est celle que le SNPNC a négociée avec la Direction de la Législation
-          Fiscale du Ministère de l’Economie, des Finances et de l’Industrie en 1999.
-        </p>
-        <p>
-          <strong>
-          NB : L'utilisation de cet outil informatique ne saurait engager la
-          responsabilité du SNPNC, si des erreurs ou omissions étaient relevées
-          par l'administration.
-          </strong>
-        </p>
-      </b-col>
+      <b-col><b-img rounded fluid :src="require('../assets/logo.png')"></b-img></b-col>
+      <b-col cols="9" v-html="f.intro"></b-col>
     </b-row>
 
     <b-row class="mt-3">
       <b-col>
-        <b-form-group
-          label="Compagnie"
-          label-for="compagnieField"
-          description="Merci d'indiquer votre compagnie afin d'ajuster le
-          formulaire à vos spécificités compagnie."
-        >
-          <b-form-select
-            id="compagnieField"
-            name="compagnieField"
-            :value="compagnie"
-            @change="updateCompagnie"
-            :options="compagnieOptions"
-            required
-          ></b-form-select>
-          <b-form-invalid-feedback>
-            invalid man !
-          </b-form-invalid-feedback>
-        </b-form-group>
+        <ValidationProvider :name="f.com.label.toLowerCase()" rules="required" v-slot="vCtx">
+          <b-form-group :id="f.com.id + '-group' " :label="f.com.label" :label-for="f.com.id">
+            <b-form-text :id="f.com.id + '-help'">{{ f.com.description }}</b-form-text>
+            <b-form-select
+              :id="f.com.id"
+              v-model="com"
+              :options="f.com.options"
+              :state="getValidationState(vCtx)"
+            ></b-form-select>
+            <b-form-invalid-feedback :id="f.com.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+          </b-form-group>
+        </ValidationProvider>
+
         <b-form-group>
           <b-button id="start" :disabled="!canStart" @click="startForm">Démarrer</b-button>
-          <b-button id="reset" :disabled="canStart">Reinitializer</b-button>
+          <b-button id="reset" :disabled="canStart" @click="resetForm">Reinitializer</b-button>
         </b-form-group>
       </b-col>
     </b-row>
@@ -53,31 +30,26 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+
+import fieldsMixin from '../model/fieldsMixin';
+import fields from '../model/fields';
+
+import { mapActions } from 'vuex';
 
 export default {
+  mixins: [fieldsMixin],
   name: 'HomeTab',
   data() {
-    return {
-      compagnieOptions: [
-          { value : null, text: `Sélectionnez votre compagnie` },
-          { value : "af", text : `Air France` },
-          { value : "autre", text : `Autre Compagnie` }
-      ]
-    }
+    return { f: fields };
   },
   computed: {
-    ...mapState({
-      compagnie: state => state.global.compagnie,
-      started: state => state.global.started,
-    }),
+    ...fieldsMixin.mapFields({fields: ["com", "started"], base: "global"}),
     canStart() {
-      return this.compagnie !== null && !this.started;
+      return this.com !== null && !this.started;
     }
   },
   methods: {
-    ...mapMutations(['updateCompagnie']),
-    ...mapActions(['startForm']),
+    ...mapActions(['startForm', 'resetForm']),
   }
 }
 </script>

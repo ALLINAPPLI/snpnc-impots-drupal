@@ -6,7 +6,7 @@
         <slot v-if="row.field.key === 'month'">{{ row.value }}</slot>
         <ValidationProvider v-else
           :name="row.field.label"
-          rules="required|numeric|min:1|min_value:0"
+          rules="required|min:1|min_value:0"
           v-slot="vCtx">
           <b-form-input
             v-model="row.item[row.field.key]"
@@ -23,36 +23,36 @@
 
 <script>
 
-import date from '../model/date';
+import fieldsMixin from '../model/fieldsMixin';
+import fields from '../model/fields';
 
 export default {
+  mixins: [fieldsMixin],
   name: "MonthlyTable",
   props: {
     edit: Boolean,
     value: Object,
     field: Object
-    // base:
   },
   data() {
+    let months = fields.months;
+
     let items = [];
     for(let i = 0; i <= 11; i++) {
-      let item = { 'month' : date.months[i] };
+      let item = { 'month' : months[i] };
       for(let j = 0; j < this.field.columns.length; j++) {
         item[this.field.columns[j].key] = this.value[this.field.columns[j].key][i];
       }
       items.push(item);
     }
 
-    let fields = [{ key:'month', label:'Mois'}, ...this.field.columns];
-    return { items, fields };
+    let tableFields = [{ key:'month', label:'Mois'}, ...this.field.columns];
+    return { items, fields: tableFields };
   },
   methods: {
     updateValue(column, index, value) {
       this.$emit('input', { column, index, value });
-    },
-    getValidationState({ dirty, validated, valid = null }) {
-      return dirty || validated ? valid : null;
-    },
+    }
   }
 
 }

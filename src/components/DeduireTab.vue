@@ -1,26 +1,44 @@
 <template>
   <b-card no-body>
     <b-tabs card fill>
-      <b-tab title="Idemnités Journalières" active><b-card-text>
+      <b-tab title="Idemnités Journalières" active lazy><b-card-text>
         TODO
       </b-card-text></b-tab>
-      <b-tab title="Frais transport"><b-card-text>
+      <b-tab title="Frais transport" lazy><b-card-text>
 
-        <ValidationProvider :name="f.fTVp.label.toLowerCase()" rules="required" v-slot="vCtx">
-          <b-form-group :id="f.fTVp.id + '-group' " :label="f.fTVp.label" :label-for="f.fTVp.id">
-            <b-form-text :id="f.fTVp.id + '-help'">{{ f.fTVp.description }}</b-form-text>
-            <b-form-select :id="f.fTVp.id" v-model="fTVp" :state="getValidationState(vCtx)" :options="fTVpoptions"/>
-            <b-form-invalid-feedback :id="f.fTVp.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+        <ValidationProvider :name="f.fTAp.label.toLowerCase()" rules="" v-slot="vCtx">
+          <b-form-group :id="f.fTAp.id + '-group' " :label="f.fTAp.label" :label-for="f.fTAp.id">
+            <b-form-text :id="f.fTAp.id + '-help'">{{ f.fTAp.description }}</b-form-text>
+            <b-form-select :id="f.fTAp.id" v-model="fTAp" :state="getValidationState(vCtx)" :options="fTApoptions"/>
+            <b-form-invalid-feedback :id="f.fTAp.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
           </b-form-group>
         </ValidationProvider>
+        <b-collapse :visible="fTAp !== f.fTAp.default" class="mt-2">
+          <b-form-group :id="f.fTAd.id + '-group' " :label="f.fTAd.label" :label-for="f.fTAd.id">
+            <MonthlyTable :id="f.fTAd.id" v-bind:edit="true" v-model="fTAd" v-bind:field="f.fTAd"></MonthlyTable>
+          </b-form-group>
+        </b-collapse>
 
-        <b-form-group :id="f.fTVd.id + '-group' " :label="f.fTVd.label" :label-for="f.fTVd.id">
-          <MonthlyTable :id="f.fTVd.id" v-bind:edit="true" v-model="fTVd" v-bind:field="f.fTVd"></MonthlyTable>
+        <ValidationProvider :name="f.fTMp.label.toLowerCase()" rules="" v-slot="vCtx">
+          <b-form-group :id="f.fTMp.id + '-group' " :label="f.fTMp.label" :label-for="f.fTMp.id">
+            <b-form-text :id="f.fTMp.id + '-help'">{{ f.fTMp.description }}</b-form-text>
+            <b-form-select :id="f.fTMp.id" v-model="fTMp" :state="getValidationState(vCtx)" :options="fTMpoptions"/>
+            <b-form-invalid-feedback :id="f.fTMp.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
+          </b-form-group>
+        </ValidationProvider>
+        <b-collapse :visible="fTMp !== f.fTMp.default" class="mt-2">
+          <b-form-group :id="f.fTMd.id + '-group' " :label="f.fTMd.label" :label-for="f.fTMd.id">
+            <MonthlyTable :id="f.fTMd.id" v-bind:edit="true" v-model="fTMd" v-bind:field="f.fTMd"></MonthlyTable>
+          </b-form-group>
+        </b-collapse>
+
+        <b-form-group :id="f.fTC.id + '-group' " :label="f.fTC.label" :label-for="f.fTC.id">
+          <MonthlyTable :id="f.fTC.id" v-bind:edit="true" v-model="fTC" v-bind:field="f.fTC"></MonthlyTable>
         </b-form-group>
 
       </b-card-text></b-tab>
 
-      <b-tab title="Cotisations syndicales"><b-card-text>
+      <b-tab title="Cotisations syndicales" lazy><b-card-text>
 
         <ValidationProvider :name="f.cS.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.cS.id + '-group' " :label="f.cS.label" :label-for="f.cS.id">
@@ -32,7 +50,7 @@
 
       </b-card-text></b-tab>
 
-      <b-tab title="Autres frais"><b-card-text>
+      <b-tab title="Autres frais" lazy><b-card-text>
 
         <ValidationProvider :name="f.fB.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fB.id + '-group' " :label="f.fB.label" :label-for="f.fB.id">
@@ -97,45 +115,41 @@
 </template>
 
 <script>
-import fields from '../model/deduire';
-import { mapBasicFields } from '../util';
 
-import baremeIT from '../store/bareme-transport';
-// import baremeIJ from '../store/bareme-idemnites-journalieres';
-
+import fieldsMixin from '../model/fieldsMixin';
+import fields from '../model/fields';
 import MonthlyTable from './MonthlyTable';
 
+import fieldsData from '../model/data';
+
 export default {
+  mixins: [fieldsMixin],
   name: 'DeduireTab',
   components: {
     MonthlyTable,
   },
   data() {
-    let fTVpoptions = baremeIT.auto.map(a => { return { value: a.key, text: a.label }} );
-    // console.log(fields.fTVp.options);
-    // fields.fTMp.options
-    return { f : fields, fTVpoptions : fTVpoptions};
+    // load auto and moto data.
+    let fTApoptions = fieldsData.idtransport.auto.map(a => { return { value: a.key, text: a.label }} );
+    let fTMpoptions = fieldsData.idtransport.moto.map(a => { return { value: a.key, text: a.label }} );
+
+    return { f : fields, fTApoptions, fTMpoptions};
   },
   computed: {
-    ...mapBasicFields({
-      fields: ["fTVp","cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"],
-      base: "deduire",
-      mutation: "deduire/updateBasicField"
+    ...fieldsMixin.mapFields({
+      fields: ["fTAp","fTAd","fTMp","fTMd","fTC","cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"],
+      base: "deduire"
     }),
-    fTVd: {
-      get() {
-        return this.$store.state.deduire.fTVd;
-      },
-      set(payload) {
-        this.$store.commit("deduire/updateTableField", { field: 'fTVd', ...payload });
-      }
-    },
   },
-  methods: {
-    getValidationState({ dirty, validated, valid = null }) {
-      return dirty || validated ? valid : null;
-    },
-  }
+  watch: {
+    fTAp() {
+      if (this.fTAp === fields.fTAp.default) {
+        // RESET THE fTAd value !!!!
+        // SAME FOR MOTO
+      }
+    }
+  },
+  methods: {},
 }
 </script>
 

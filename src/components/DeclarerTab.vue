@@ -27,14 +27,14 @@
         </ValidationProvider>
 
       </b-card-text></b-tab>
-      <b-tab :title="f.iR.label"><b-card-text>
+      <b-tab :title="f.iR.label" lazy><b-card-text>
 
         <b-form-group :id="f.iR.id + '-group' " :label="f.iR.label" :label-for="f.iR.id">
           <MonthlyTable :id="f.iR.id" v-bind:edit="true" v-model="iR" v-bind:field="f.iR"></MonthlyTable>
         </b-form-group>
 
       </b-card-text></b-tab>
-      <b-tab :title="f.iT.label"><b-card-text>
+      <b-tab :title="f.iT.label" lazy><b-card-text>
 
         <b-form-group :id="f.iT.id + '-group' " :label="f.iT.label" :label-for="f.iT.id">
           <MonthlyTable :id="f.iT.id" v-bind:edit="true" v-model="iT" v-bind:field="f.iT"></MonthlyTable>
@@ -47,11 +47,13 @@
 </template>
 
 <script>
-import fields from '../model/declarer';
-import { mapBasicFields } from '../util';
+
+import fieldsMixin from '../model/fieldsMixin';
+import fields from '../model/fields';
 import MonthlyTable from './MonthlyTable';
 
 export default {
+  mixins: [fieldsMixin],
   name: 'DeclarerTab',
   components: {
     MonthlyTable,
@@ -60,33 +62,8 @@ export default {
     return { f : fields };
   },
   computed: {
-    ...mapBasicFields({
-      fields: ["cNI", "fH", "iS"],
-      base: "declarer",
-      mutation: "declarer/updateBasicField"
-    }),
-    iR: {
-      get() {
-        return this.$store.state.declarer.iR;
-      },
-      set(payload) {
-        this.$store.commit("declarer/updateTableField", { field: 'iR', ...payload });
-      }
-    },
-    iT: {
-      get() {
-        return this.$store.state.declarer.iT;
-      },
-      set(payload) {
-        this.$store.commit("declarer/updateTableField", { field: 'iT', ...payload });
-      }
-    },
+    ...fieldsMixin.mapFields({fields: ["cNI", "fH", "iS", 'iR', 'iT'], base: "declarer"}),
   },
-  methods: {
-    getValidationState({ dirty, validated, valid = null }) {
-      return dirty || validated ? valid : null;
-    },
-  }
 }
 </script>
 
