@@ -1,5 +1,6 @@
 export default {
-  idtransport: {
+  year: 2019,
+  idtransport:  {
     auto: [
       {
         key : 'null',
@@ -23,17 +24,16 @@ export default {
           { min: 20000, coef: 0.349, ajust: 0 },
         ]
       },
-      {
-        key : '5CV',
-        label: "5 CV",
-        distance: [
-          { min: 0, coef: 0.543, ajust: 0 },
-          { min: 5000, coef: 0.305, ajust: 1188 },
-          { min: 20000, coef: 0.364, ajust: 0 },
-        ]
-      },
-      {
-        key : '6CV',
+    {
+      key : '5CV',
+      label: "5 CV",
+      distance: [
+        { min: 0, coef: 0.543, ajust: 0 },
+        { min: 5000, coef: 0.305, ajust: 1188 },
+        { min: 20000, coef: 0.364, ajust: 0 },
+      ]
+    },
+       {     key : '6CV',
         label: "6 CV",
         distance: [
           { min: 0, coef: 0.568, ajust: 0 },
@@ -41,8 +41,7 @@ export default {
           { min: 20000, coef: 0.382, ajust: 0 },
         ]
       },
-      {
-        key : '7CV',
+       {     key : '7CV',
         label: "7 CV et plus",
         distance: [
           { min: 0, coef: 0.595, ajust: 0 },
@@ -52,12 +51,10 @@ export default {
       },
     ],
     moto: [
-      {
-        key : 'null',
+       {     key : 'null',
         label: `Je n'ai pas de frais deux roues à déduire`,
       },
-      {
-        key : '50',
+       {     key : '50',
         label: "< 50cm³",
         distance: [
           { min: 0, coef: 0.269, ajust: 0 },
@@ -65,8 +62,7 @@ export default {
           { min: 5000, coef: 0.146, ajust: 0 },
         ]
       },
-      {
-        key : '2CV',
+       {     key : '2CV',
         label: "1 ou 2 CV",
         distance: [
           { min: 0, coef: 0.338, ajust: 0 },
@@ -74,8 +70,7 @@ export default {
           { min: 6000, coef: 0.211, ajust: 0 },
         ]
       },
-      {
-        key : '5CV',
+       {     key : '5CV',
         label: "3, 4 ou 5 CV",
         distance: [
           { min: 0, coef: 0.4, ajust: 0 },
@@ -94,1284 +89,222 @@ export default {
       },
     ]
   },
+  idemniteZoneEurope: 157,
+  zoneMonde: { key: "L", label: "Zone Monde" },
+  zoneEurope: { key: "E", label: "Zone Euro-Moyen" },
   idjournalieres: [
-  {
-    "pays":"AFGHANISTAN",
-    "zone":"L",
-    "montant":"242.31",
-    "du":""
-  },
-  {
-    "pays":"AFRIQUE DU SUD",
-    "zone":"L",
-    "montant":"138",
-    "du":""
-  },
-  {
-    "pays":"ANGOLA",
-    "zone":"L",
-    "montant":"300",
-    "du":""
-  },
-  {
-    "pays":"ANGUILLA",
-    "zone":"L",
-    "montant":"180.65",
-    "du":""
-  },
-  {
-    "pays":"ANTIGUA",
-    "zone":"L",
-    "montant":"199.76",
-    "du":""
-  },
-  {
-    "pays":"ARABIE SAOUDITE",
-    "zone":"L",
-    "montant":"158",
-    "du":""
-  },
-  {
-    "pays":"ARGENTINE",
-    "zone":"L",
-    "montant":"136.36",
-    "du":""
-  },
-  {
-    "pays":"ARMENIE",
-    "zone":"L",
-    "montant":"186",
-    "du":""
-  },
-  {
-    "pays":"ARUBA",
-    "zone":"L",
-    "montant":"130.28",
-    "du":""
-  },
-  {
-    "pays":"AUSTRALIE",
-    "zone":"L",
-    "montant":"234.14",
-    "du":""
-  },
-  {
-    "pays":"AZERBAIDJAN",
-    "zone":"L",
-    "montant":"204",
-    "du":""
-  },
-  {
-    "pays":"BAHAMAS",
-    "zone":"L",
-    "montant":"179.78",
-    "du":""
-  },
-  {
-    "pays":"BAHREIN",
-    "zone":"L",
-    "montant":"200",
-    "du":""
-  },
-  {
-    "pays":"BANGLADESH",
-    "zone":"L",
-    "montant":"130",
-    "du":""
-  },
-  {
-    "pays":"BARBADE",
-    "zone":"L",
-    "montant":"269.24",
-    "du":""
-  },
-  {
-    "pays":"BELIZE",
-    "zone":"L",
-    "montant":"153.73",
-    "du":""
-  },
-  {
-    "pays":"BENIN",
-    "zone":"L",
-    "montant":"145",
-    "du":""
-  },
-  {
-    "pays":"BERMUDES",
-    "zone":"L",
-    "montant":"169.01",
-    "du":""
-  },
-  {
-    "pays":"BIELORUSSIE",
-    "zone":"L",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"BOLIVIE",
-    "zone":"L",
-    "montant":"117.25",
-    "du":""
-  },
-  {
-    "pays":"BOTSWANA",
-    "zone":"L",
-    "montant":"119",
-    "du":""
-  },
-  {
-    "pays":"BRESIL ",
-    "zone":"L",
-    "montant":"216",
-    "du":""
-  },
-  {
-    "pays":"BRUNEI DARUSSALAM",
-    "zone":"L",
-    "montant":"162.31",
-    "du":""
-  },
-  {
-    "pays":"BURKINA FASO ",
-    "zone":"L",
-    "montant":"145",
-    "du":""
-  },
-  {
-    "pays":"BURUNDI",
-    "zone":"L",
-    "montant":"140",
-    "du":""
-  },
-  {
-    "pays":"CAMBODGE",
-    "zone":"L",
-    "montant":"130.28",
-    "du":""
-  },
-  {
-    "pays":"CAMEROUN",
-    "zone":"L",
-    "montant":"120",
-    "du":""
-  },
-  {
-    "pays":"CANADA",
-    "zone":"L",
-    "montant":"178.21",
-    "du":""
-  },
-  {
-    "pays":"CAP-VERT",
-    "zone":"L",
-    "montant":"123.11",
-    "du":""
-  },
-  {
-    "pays":"CHILI",
-    "zone":"L",
-    "montant":"188.47",
-    "du":""
-  },
-  {
-    "pays":"CHINE",
-    "zone":"L",
-    "montant":"232.93",
-    "du":""
-  },
-  {
-    "pays":"CHINE (SHANGAI)",
-    "zone":"L",
-    "montant":"232.93",
-    "du":""
-  },
-  {
-    "pays":"COLOMBIE",
-    "zone":"L",
-    "montant":"152.86",
-    "du":""
-  },
-  {
-    "pays":"COMORES",
-    "zone":"L",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"CONGO",
-    "zone":"L",
-    "montant":"106.53",
-    "du":""
-  },
-  {
-    "pays":"COREE DU NORD",
-    "zone":"L",
-    "montant":"236.23",
-    "du":""
-  },
-  {
-    "pays":"COREE DU SUD",
-    "zone":"L",
-    "montant":"210",
-    "du":""
-  },
-  {
-    "pays":"COSTA RICA",
-    "zone":"L",
-    "montant":"146.78",
-    "du":""
-  },
-  {
-    "pays":"COTE D’IVOIRE",
-    "zone":"L",
-    "montant":"208.86",
-    "du":""
-  },
-  {
-    "pays":"CUBA",
-    "zone":"L",
-    "montant":"155",
-    "du":""
-  },
-  {
-    "pays":"CURAÇAO",
-    "zone":"L",
-    "montant":"130.28",
-    "du":""
-  },
-  {
-    "pays":"DJIBOUTI",
-    "zone":"L",
-    "montant":"177.93",
-    "du":""
-  },
-  {
-    "pays":"DOMINIQUE",
-    "zone":"L",
-    "montant":"174.57",
-    "du":""
-  },
-  {
-    "pays":"EGYPTE",
-    "zone":"L",
-    "montant":"148",
-    "du":""
-  },
-  {
-    "pays":"EMIRATS ARABES UNIS",
-    "zone":"L",
-    "montant":"300",
-    "du":""
-  },
-  {
-    "pays":"EQUATEUR",
-    "zone":"L",
-    "montant":"130.28",
-    "du":""
-  },
-  {
-    "pays":"ERYTHREE",
-    "zone":"L",
-    "montant":"94",
-    "du":""
-  },
-  {
-    "pays":"ETATS - UNIS",
-    "zone":"L",
-    "montant":"277.92",
-    "du":""
-  },
-  {
-    "pays":"ETATS - UNIS (NEW-YORK)",
-    "zone":"L",
-    "montant":"277.92",
-    "du":""
-  },
-  {
-    "pays":"ETATS - UNIS (NEW-YORK)",
-    "zone":"L",
-    "montant":"390.83",
-    "du":"01/09/15"
-  },
-  {
-    "pays":"ETHIOPIE",
-    "zone":"L",
-    "montant":"123",
-    "du":""
-  },
-  {
-    "pays":"FIDJI",
-    "zone":"L",
-    "montant":"94.68",
-    "du":""
-  },
-  {
-    "pays":"GABON",
-    "zone":"L",
-    "montant":"152.45",
-    "du":""
-  },
-  {
-    "pays":"GAMBIE",
-    "zone":"L",
-    "montant":"52.02",
-    "du":""
-  },
-  {
-    "pays":"GEORGIE",
-    "zone":"L",
-    "montant":"169.36",
-    "du":""
-  },
-  {
-    "pays":"GHANA",
-    "zone":"L",
-    "montant":"166.75",
-    "du":""
-  },
-  {
-    "pays":"GRENADE",
-    "zone":"L",
-    "montant":"172.83",
-    "du":""
-  },
-  {
-    "pays":"GRENADINES",
-    "zone":"L",
-    "montant":"163.28",
-    "du":""
-  },
-  {
-    "pays":"GUATEMALA",
-    "zone":"L",
-    "montant":"160",
-    "du":""
-  },
-  {
-    "pays":"GUINEE (CONAKRY)",
-    "zone":"L",
-    "montant":"170",
-    "du":""
-  },
-  {
-    "pays":"GUINEE BISSAU",
-    "zone":"L",
-    "montant":"105",
-    "du":""
-  },
-  {
-    "pays":"GUINEE EQUATORIALE",
-    "zone":"L",
-    "montant":"137.97",
-    "du":""
-  },
-  {
-    "pays":"GUYANA (GEORGETOWN)",
-    "zone":"L",
-    "montant":"173.7",
-    "du":""
-  },
-  {
-    "pays":"HAITI",
-    "zone":"L",
-    "montant":"191.07",
-    "du":""
-  },
-  {
-    "pays":"HONDURAS",
-    "zone":"L",
-    "montant":"132.01",
-    "du":""
-  },
-  {
-    "pays":"HONG-KONG",
-    "zone":"L",
-    "montant":"246.44",
-    "du":""
-  },
-  {
-    "pays":"ILES CAIMAN",
-    "zone":"L",
-    "montant":"122.46",
-    "du":""
-  },
-  {
-    "pays":"ILES COOK",
-    "zone":"L",
-    "montant":"160.26",
-    "du":""
-  },
-  {
-    "pays":"ILES MARSHALL",
-    "zone":"L",
-    "montant":"133.75",
-    "du":""
-  },
-  {
-    "pays":"ILES PALAOS",
-    "zone":"L",
-    "montant":"270.11",
-    "du":""
-  },
-  {
-    "pays":"INDE",
-    "zone":"L",
-    "montant":"260",
-    "du":""
-  },
-  {
-    "pays":"INDONESIE",
-    "zone":"L",
-    "montant":"160",
-    "du":""
-  },
-  {
-    "pays":"IRAK",
-    "zone":"L",
-    "montant":"300",
-    "du":""
-  },
-  {
-    "pays":"IRAN",
-    "zone":"L",
-    "montant":"161.54",
-    "du":""
-  },
-  {
-    "pays":"ISRAEL",
-    "zone":"L",
-    "montant":"230",
-    "du":""
-  },
-  {
-    "pays":"JAMAIQUE",
-    "zone":"L",
-    "montant":"140.7",
-    "du":""
-  },
-  {
-    "pays":"JAPON",
-    "zone":"L",
-    "montant":"184.58",
-    "du":""
-  },
-  {
-    "pays":"JAPON (TOKYO)",
-    "zone":"L",
-    "montant":"217.16",
-    "du":""
-  },
-  {
-    "pays":"JORDANIE",
-    "zone":"L",
-    "montant":"185.83",
-    "du":""
-  },
-  {
-    "pays":"KAZAKHSTAN",
-    "zone":"L",
-    "montant":"290",
-    "du":""
-  },
-  {
-    "pays":"KENYA",
-    "zone":"L",
-    "montant":"122.46",
-    "du":""
-  },
-  {
-    "pays":"KIRGHIZIE",
-    "zone":"L",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"KIRIBATI",
-    "zone":"L",
-    "montant":"93.41",
-    "du":""
-  },
-  {
-    "pays":"KOWEIT",
-    "zone":"L",
-    "montant":"245",
-    "du":""
-  },
-  {
-    "pays":"LAOS",
-    "zone":"L",
-    "montant":"130.28",
-    "du":""
-  },
-  {
-    "pays":"LESOTHO",
-    "zone":"L",
-    "montant":"120",
-    "du":""
-  },
-  {
-    "pays":"LIBAN",
-    "zone":"L",
-    "montant":"154",
-    "du":""
-  },
-  {
-    "pays":"LIBERIA",
-    "zone":"L",
-    "montant":"199.76",
-    "du":""
-  },
-  {
-    "pays":"LIBYE",
-    "zone":"L",
-    "montant":"191.88",
-    "du":""
-  },
-  {
-    "pays":"MACAO",
-    "zone":"L",
-    "montant":"246.44",
-    "du":""
-  },
-  {
-    "pays":"MADAGASCAR",
-    "zone":"L",
-    "montant":"114",
-    "du":""
-  },
-  {
-    "pays":"MALAISIE",
-    "zone":"L",
-    "montant":"104.97",
-    "du":""
-  },
-  {
-    "pays":"MALAWI",
-    "zone":"L",
-    "montant":"185.86",
-    "du":""
-  },
-  {
-    "pays":"MALDIVES",
-    "zone":"L",
-    "montant":"230",
-    "du":""
-  },
-  {
-    "pays":"MALI",
-    "zone":"L",
-    "montant":"94.52",
-    "du":""
-  },
-  {
-    "pays":"MAURICE",
-    "zone":"L",
-    "montant":"142.22",
-    "du":""
-  },
-  {
-    "pays":"MAURITANIE",
-    "zone":"L",
-    "montant":"143",
-    "du":""
-  },
-  {
-    "pays":"MEXIQUE",
-    "zone":"L",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"MICRONESIE",
-    "zone":"L",
-    "montant":"136.36",
-    "du":""
-  },
-  {
-    "pays":"MOLDAVIE",
-    "zone":"L",
-    "montant":"163.28",
-    "du":""
-  },
-  {
-    "pays":"MONGOLIE",
-    "zone":"L",
-    "montant":"102",
-    "du":""
-  },
-  {
-    "pays":"MOZAMBIQUE",
-    "zone":"L",
-    "montant":"164.15",
-    "du":""
-  },
-  {
-    "pays":"MYANMAR (BIRMANIE)",
-    "zone":"L",
-    "montant":"217.13",
-    "du":""
-  },
-  {
-    "pays":"NAMIBIE",
-    "zone":"L",
-    "montant":"90",
-    "du":""
-  },
-  {
-    "pays":"NAURU",
-    "zone":"L",
-    "montant":"87.92",
-    "du":""
-  },
-  {
-    "pays":"NEPAL",
-    "zone":"L",
-    "montant":"121.59",
-    "du":""
-  },
-  {
-    "pays":"NICARAGUA",
-    "zone":"L",
-    "montant":"133.75",
-    "du":""
-  },
-  {
-    "pays":"NIGER",
-    "zone":"L",
-    "montant":"118.91",
-    "du":""
-  },
-  {
-    "pays":"NIGERIA",
-    "zone":"L",
-    "montant":"273",
-    "du":""
-  },
-  {
-    "pays":"NIUE",
-    "zone":"L",
-    "montant":"129.74",
-    "du":""
-  },
-  {
-    "pays":"NOUVELLE CALEDONIE",
-    "zone":"L",
-    "montant":"120",
-    "du":""
-  },
-  {
-    "pays":"NOUVELLE ZELANDE",
-    "zone":"L",
-    "montant":"235.31",
-    "du":""
-  },
-  {
-    "pays":"OMAN",
-    "zone":"L",
-    "montant":"265",
-    "du":""
-  },
-  {
-    "pays":"OUGANDA",
-    "zone":"L",
-    "montant":"130",
-    "du":""
-  },
-  {
-    "pays":"OUZBEKISTAN",
-    "zone":"L",
-    "montant":"98.14",
-    "du":""
-  },
-  {
-    "pays":"PAKISTAN",
-    "zone":"L",
-    "montant":"150.25",
-    "du":""
-  },
-  {
-    "pays":"PANAMA",
-    "zone":"L",
-    "montant":"154.59",
-    "du":""
-  },
-  {
-    "pays":"PAPOUASIE NOUVELLE GUINEE",
-    "zone":"L",
-    "montant":"172",
-    "du":""
-  },
-  {
-    "pays":"PARAGUAY",
-    "zone":"L",
-    "montant":"156.33",
-    "du":""
-  },
-  {
-    "pays":"PEROU",
-    "zone":"L",
-    "montant":"147.65",
-    "du":""
-  },
-  {
-    "pays":"PHILIPPINES",
-    "zone":"L",
-    "montant":"166.36",
-    "du":""
-  },
-  {
-    "pays":"POLYNESIE FRANÇAISE",
-    "zone":"L",
-    "montant":"120",
-    "du":""
-  },
-  {
-    "pays":"QATAR",
-    "zone":"L",
-    "montant":"278",
-    "du":""
-  },
-  {
-    "pays":"REP CENTRAFRICAINE ",
-    "zone":"L",
-    "montant":"121.96",
-    "du":""
-  },
-  {
-    "pays":"REPUBLIQUE DEM DU CONGO",
-    "zone":"L",
-    "montant":"195",
-    "du":""
-  },
-  {
-    "pays":"REPUBLIQUE DOMINICAINE",
-    "zone":"L",
-    "montant":"109.52",
-    "du":""
-  },
-  {
-    "pays":"REP DU SOUDAN SUD",
-    "zone":"L",
-    "montant":"265.76",
-    "du":""
-  },
-  {
-    "pays":"REPUBLIQUE DU YEMEN",
-    "zone":"L",
-    "montant":"188",
-    "du":""
-  },
-  {
-    "pays":"RUSSIE",
-    "zone":"L",
-    "montant":"230",
-    "du":""
-  },
-  {
-    "pays":"RWANDA",
-    "zone":"L",
-    "montant":"240.58",
-    "du":""
-  },
-  {
-    "pays":"SAINT-KITTS-ET-NEVIS",
-    "zone":"L",
-    "montant":"175.44",
-    "du":""
-  },
-  {
-    "pays":"SAINT-VINCENT",
-    "zone":"L",
-    "montant":"163.28",
-    "du":""
-  },
-  {
-    "pays":"SAINTE-LUCIE",
-    "zone":"L",
-    "montant":"172.83",
-    "du":""
-  },
-  {
-    "pays":"SALVADOR",
-    "zone":"L",
-    "montant":"153.73",
-    "du":""
-  },
-  {
-    "pays":"SAMOA OCCIDENTALES",
-    "zone":"L",
-    "montant":"120.72",
-    "du":""
-  },
-  {
-    "pays":"SAO TOME-ET-PRINCIPE",
-    "zone":"L",
-    "montant":"117.25",
-    "du":""
-  },
-  {
-    "pays":"SENEGAL",
-    "zone":"L",
-    "montant":"139.95",
-    "du":""
-  },
-  {
-    "pays":"SEYCHELLES",
-    "zone":"L",
-    "montant":"300",
-    "du":""
-  },
-  {
-    "pays":"SIERRA LEONE",
-    "zone":"L",
-    "montant":"225.81",
-    "du":""
-  },
-  {
-    "pays":"SINGAPOUR",
-    "zone":"L",
-    "montant":"200",
-    "du":""
-  },
-  {
-    "pays":"SOMALIE",
-    "zone":"L",
-    "montant":"137.22",
-    "du":""
-  },
-  {
-    "pays":"SOUDAN",
-    "zone":"L",
-    "montant":"151.99",
-    "du":""
-  },
-  {
-    "pays":"SRI LANKA",
-    "zone":"L",
-    "montant":"155",
-    "du":""
-  },
-  {
-    "pays":"SURINAM",
-    "zone":"L",
-    "montant":"156.33",
-    "du":""
-  },
-  {
-    "pays":"SWAZILAND",
-    "zone":"L",
-    "montant":"41.95",
-    "du":""
-  },
-  {
-    "pays":"SYRIE",
-    "zone":"L",
-    "montant":"154",
-    "du":""
-  },
-  {
-    "pays":"TADJIKISTAN",
-    "zone":"L",
-    "montant":"117.25",
-    "du":""
-  },
-  {
-    "pays":"TAIWAN",
-    "zone":"L",
-    "montant":"160.83",
-    "du":""
-  },
-  {
-    "pays":"TANZANIE",
-    "zone":"L",
-    "montant":"135",
-    "du":""
-  },
-  {
-    "pays":"TCHAD",
-    "zone":"L",
-    "montant":"225",
-    "du":""
-  },
-  {
-    "pays":"THAILANDE",
-    "zone":"L",
-    "montant":"98.16",
-    "du":""
-  },
-  {
-    "pays":"TIMOR ORIENTAL",
-    "zone":"L",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"TOGO",
-    "zone":"L",
-    "montant":"125.98",
-    "du":""
-  },
-  {
-    "pays":"TONGA",
-    "zone":"L",
-    "montant":"90.46",
-    "du":""
-  },
-  {
-    "pays":"TRINITE ET TOBAGO",
-    "zone":"L",
-    "montant":"231.89",
-    "du":""
-  },
-  {
-    "pays":"TURKMENISTAN",
-    "zone":"L",
-    "montant":"102",
-    "du":""
-  },
-  {
-    "pays":"TURQUIE",
-    "zone":"L",
-    "montant":"165",
-    "du":""
-  },
-  {
-    "pays":"TUVALU",
-    "zone":"L",
-    "montant":"81.16",
-    "du":""
-  },
-  {
-    "pays":"UKRAINE",
-    "zone":"L",
-    "montant":"208",
-    "du":""
-  },
-  {
-    "pays":"URUGUAY",
-    "zone":"L",
-    "montant":"117.25",
-    "du":""
-  },
-  {
-    "pays":"VANUATU",
-    "zone":"L",
-    "montant":"210",
-    "du":""
-  },
-  {
-    "pays":"VENEZUELA",
-    "zone":"L",
-    "montant":"195",
-    "du":""
-  },
-  {
-    "pays":"VIETNAM",
-    "zone":"L",
-    "montant":"158",
-    "du":""
-  },
-  {
-    "pays":"WALLIS ET FUTUNA",
-    "zone":"L",
-    "montant":"120",
-    "du":""
-  },
-  {
-    "pays":"ZAMBIE",
-    "zone":"L",
-    "montant":"180",
-    "du":""
-  },
-  {
-    "pays":"ZIMBABWE",
-    "zone":"L",
-    "montant":"156.33",
-    "du":""
-  },
-  {
-    "pays":"ALBANIE",
-    "zone":"E",
-    "montant":"180",
-    "du":""
-  },
-  {
-    "pays":"ALGERIE",
-    "zone":"E",
-    "montant":"99.07",
-    "du":""
-  },
-  {
-    "pays":"BOSNIE-HERZEGOVINE",
-    "zone":"E",
-    "montant":"169",
-    "du":""
-  },
-  {
-    "pays":"BULGARIE",
-    "zone":"E",
-    "montant":"145",
-    "du":""
-  },
-  {
-    "pays":"CROATIE",
-    "zone":"E",
-    "montant":"142",
-    "du":""
-  },
-  {
-    "pays":"DANEMARK",
-    "zone":"E",
-    "montant":"222.7",
-    "du":""
-  },
-  {
-    "pays":"GRANDE-BRETAGNE",
-    "zone":"E",
-    "montant":"171.87",
-    "du":""
-  },
-  {
-    "pays":"HONGRIE",
-    "zone":"E",
-    "montant":"175",
-    "du":""
-  },
-  {
-    "pays":"ISLANDE",
-    "zone":"E",
-    "montant":"101.66",
-    "du":""
-  },
-  {
-    "pays":"LIECHTENSTEIN",
-    "zone":"E",
-    "montant":"201.23",
-    "du":""
-  },
-  {
-    "pays":"MACEDOINE",
-    "zone":"E",
-    "montant":"117",
-    "du":""
-  },
-  {
-    "pays":"MAROC",
-    "zone":"E",
-    "montant":"175",
-    "du":""
-  },
-  {
-    "pays":"MONTENEGRO",
-    "zone":"E",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"NORVEGE",
-    "zone":"E",
-    "montant":"157.15",
-    "du":""
-  },
-  {
-    "pays":"POLOGNE",
-    "zone":"E",
-    "montant":"175",
-    "du":""
-  },
-  {
-    "pays":"REPUBLIQUE TCHEQUE",
-    "zone":"E",
-    "montant":"180",
-    "du":""
-  },
-  {
-    "pays":"ROUMANIE",
-    "zone":"E",
-    "montant":"160",
-    "du":""
-  },
-  {
-    "pays":"SERBIE",
-    "zone":"E",
-    "montant":"150",
-    "du":""
-  },
-  {
-    "pays":"SUEDE",
-    "zone":"E",
-    "montant":"214.93",
-    "du":""
-  },
-  {
-    "pays":"SUISSE",
-    "zone":"E",
-    "montant":"201.23",
-    "du":""
-  },
-  {
-    "pays":"TUNISIE",
-    "zone":"E",
-    "montant":"125",
-    "du":""
-  },
-  {
-    "pays":"ALLEMAGNE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"BELGIQUE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"CHYPRE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"ESPAGNE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"ESTONIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"FINLANDE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"FRANCE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"GRÈCE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"GUADELOUPE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"GUYANE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"IRLANDE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"ITALIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"LA RÉUNION",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"LETTONIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"LITUANIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"LUXEMBOURG",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"MALTE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"MARTINIQUE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"MAYOTTE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"PAYS-BAS",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"PORTUGAL",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"SAINT BARTHÉLÉMY",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"SAINT-MARTIN",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"SAINT PIERRE ET MIQUELON",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"SLOVAQUIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  },
-  {
-    "pays":"SLOVÉNIE",
-    "zone":"E",
-    "montant":"156",
-    "du":""
-  }
+   { pays: "AFGHANISTAN", zone: "L", idemnite: 242.31, du:"" },
+   { pays: "AFRIQUE DU SUD", zone: "L", idemnite: 138, du:"" },
+   { pays: "ANGOLA", zone: "L", idemnite: 300, du:"" },
+   { pays: "ANGUILLA", zone: "L", idemnite: 180.65, du:"" },
+   { pays: "ANTIGUA", zone: "L", idemnite: 199.76, du:"" },
+   { pays: "ARABIE SAOUDITE", zone: "L", idemnite: 158, du:"" },
+   { pays: "ARGENTINE", zone: "L", idemnite: 136.36, du:"" },
+   { pays: "ARMENIE", zone: "L", idemnite: 186, du:"" },
+   { pays: "ARUBA", zone: "L", idemnite: 130.28, du:"" },
+   { pays: "AUSTRALIE", zone: "L", idemnite: 234.14, du:"" },
+   { pays: "AZERBAIDJAN", zone: "L", idemnite: 204, du:"" },
+   { pays: "BAHAMAS", zone: "L", idemnite: 179.78, du:"" },
+   { pays: "BAHREIN", zone: "L", idemnite: 200, du:"" },
+   { pays: "BANGLADESH", zone: "L", idemnite: 130, du:"" },
+   { pays: "BARBADE", zone: "L", idemnite: 269.24, du:"" },
+   { pays: "BELIZE", zone: "L", idemnite: 153.73, du:"" },
+   { pays: "BENIN", zone: "L", idemnite: 145, du:"" },
+   { pays: "BERMUDES", zone: "L", idemnite: 169.01, du:"" },
+   { pays: "BIELORUSSIE", zone: "L", idemnite: 150, du:"" },
+   { pays: "BOLIVIE", zone: "L", idemnite: 117.25, du:"" },
+   { pays: "BOTSWANA", zone: "L", idemnite: 119, du:"" },
+   { pays: "BRESIL ", zone: "L", idemnite: 216, du:"" },
+   { pays: "BRUNEI DARUSSALAM", zone: "L", idemnite: 162.31, du:"" },
+   { pays: "BURKINA FASO ", zone: "L", idemnite: 145, du:"" },
+   { pays: "BURUNDI", zone: "L", idemnite: 140, du:"" },
+   { pays: "CAMBODGE", zone: "L", idemnite: 130.28, du:"" },
+   { pays: "CAMEROUN", zone: "L", idemnite: 120, du:"" },
+   { pays: "CANADA", zone: "L", idemnite: 178.21, du:"" },
+   { pays: "CAP-VERT", zone: "L", idemnite: 123.11, du:"" },
+   { pays: "CHILI", zone: "L", idemnite: 188.47, du:"" },
+   { pays: "CHINE", zone: "L", idemnite: 232.93, du:"" },
+   { pays: "CHINE (SHANGAI)", zone: "L", idemnite: 232.93, du:"" },
+   { pays: "COLOMBIE", zone: "L", idemnite: 152.86, du:"" },
+   { pays: "COMORES", zone: "L", idemnite: 150, du:"" },
+   { pays: "CONGO", zone: "L", idemnite: 106.53, du:"" },
+   { pays: "COREE DU NORD", zone: "L", idemnite: 236.23, du:"" },
+   { pays: "COREE DU SUD", zone: "L", idemnite: 210, du:"" },
+   { pays: "COSTA RICA", zone: "L", idemnite: 146.78, du:"" },
+   { pays: "COTE D’IVOIRE", zone: "L", idemnite: 208.86, du:"" },
+   { pays: "CUBA", zone: "L", idemnite: 155, du:"" },
+   { pays: "CURAÇAO", zone: "L", idemnite: 130.28, du:"" },
+   { pays: "DJIBOUTI", zone: "L", idemnite: 177.93, du:"" },
+   { pays: "DOMINIQUE", zone: "L", idemnite: 174.57, du:"" },
+   { pays: "EGYPTE", zone: "L", idemnite: 148, du:"" },
+   { pays: "EMIRATS ARABES UNIS", zone: "L", idemnite: 300, du:"" },
+   { pays: "EQUATEUR", zone: "L", idemnite: 130.28, du:"" },
+   { pays: "ERYTHREE", zone: "L", idemnite: 94, du:"" },
+   { pays: "ETATS - UNIS", zone: "L", idemnite: 277.92, du:"" },
+   { pays: "ETATS - UNIS (NEW-YORK)", zone: "L", idemnite: 277.92, du:"" },
+   { pays: "ETATS - UNIS (NEW-YORK)", zone: "L", idemnite: 390.83, du:"01/09/15" },
+   { pays: "ETHIOPIE", zone: "L", idemnite: 123, du:"" },
+   { pays: "FIDJI", zone: "L", idemnite: 94.68, du:"" },
+   { pays: "GABON", zone: "L", idemnite: 152.45, du:"" },
+   { pays: "GAMBIE", zone: "L", idemnite: 52.02, du:"" },
+   { pays: "GEORGIE", zone: "L", idemnite: 169.36, du:"" },
+   { pays: "GHANA", zone: "L", idemnite: 166.75, du:"" },
+   { pays: "GRENADE", zone: "L", idemnite: 172.83, du:"" },
+   { pays: "GRENADINES", zone: "L", idemnite: 163.28, du:"" },
+   { pays: "GUATEMALA", zone: "L", idemnite: 160, du:"" },
+   { pays: "GUINEE (CONAKRY)", zone: "L", idemnite: 170, du:"" },
+   { pays: "GUINEE BISSAU", zone: "L", idemnite: 105, du:"" },
+   { pays: "GUINEE EQUATORIALE", zone: "L", idemnite: 137.97, du:"" },
+   { pays: "GUYANA (GEORGETOWN)", zone: "L", idemnite: 173.7, du:"" },
+   { pays: "HAITI", zone: "L", idemnite: 191.07, du:"" },
+   { pays: "HONDURAS", zone: "L", idemnite: 132.01, du:"" },
+   { pays: "HONG-KONG", zone: "L", idemnite: 246.44, du:"" },
+   { pays: "ILES CAIMAN", zone: "L", idemnite: 122.46, du:"" },
+   { pays: "ILES COOK", zone: "L", idemnite: 160.26, du:"" },
+   { pays: "ILES MARSHALL", zone: "L", idemnite: 133.75, du:"" },
+   { pays: "ILES PALAOS", zone: "L", idemnite: 270.11, du:"" },
+   { pays: "INDE", zone: "L", idemnite: 260, du:"" },
+   { pays: "INDONESIE", zone: "L", idemnite: 160, du:"" },
+   { pays: "IRAK", zone: "L", idemnite: 300, du:"" },
+   { pays: "IRAN", zone: "L", idemnite: 161.54, du:"" },
+   { pays: "ISRAEL", zone: "L", idemnite: 230, du:"" },
+   { pays: "JAMAIQUE", zone: "L", idemnite: 140.7, du:"" },
+   { pays: "JAPON", zone: "L", idemnite: 184.58, du:"" },
+   { pays: "JAPON (TOKYO)", zone: "L", idemnite: 217.16, du:"" },
+   { pays: "JORDANIE", zone: "L", idemnite: 185.83, du:"" },
+   { pays: "KAZAKHSTAN", zone: "L", idemnite: 290, du:"" },
+   { pays: "KENYA", zone: "L", idemnite: 122.46, du:"" },
+   { pays: "KIRGHIZIE", zone: "L", idemnite: 150, du:"" },
+   { pays: "KIRIBATI", zone: "L", idemnite: 93.41, du:"" },
+   { pays: "KOWEIT", zone: "L", idemnite: 245, du:"" },
+   { pays: "LAOS", zone: "L", idemnite: 130.28, du:"" },
+   { pays: "LESOTHO", zone: "L", idemnite: 120, du:"" },
+   { pays: "LIBAN", zone: "L", idemnite: 154, du:"" },
+   { pays: "LIBERIA", zone: "L", idemnite: 199.76, du:"" },
+   { pays: "LIBYE", zone: "L", idemnite: 191.88, du:"" },
+   { pays: "MACAO", zone: "L", idemnite: 246.44, du:"" },
+   { pays: "MADAGASCAR", zone: "L", idemnite: 114, du:"" },
+   { pays: "MALAISIE", zone: "L", idemnite: 104.97, du:"" },
+   { pays: "MALAWI", zone: "L", idemnite: 185.86, du:"" },
+   { pays: "MALDIVES", zone: "L", idemnite: 230, du:"" },
+   { pays: "MALI", zone: "L", idemnite: 94.52, du:"" },
+   { pays: "MAURICE", zone: "L", idemnite: 142.22, du:"" },
+   { pays: "MAURITANIE", zone: "L", idemnite: 143, du:"" },
+   { pays: "MEXIQUE", zone: "L", idemnite: 150, du:"" },
+   { pays: "MICRONESIE", zone: "L", idemnite: 136.36, du:"" },
+   { pays: "MOLDAVIE", zone: "L", idemnite: 163.28, du:"" },
+   { pays: "MONGOLIE", zone: "L", idemnite: 102, du:"" },
+   { pays: "MOZAMBIQUE", zone: "L", idemnite: 164.15, du:"" },
+   { pays: "MYANMAR (BIRMANIE)", zone: "L", idemnite: 217.13, du:"" },
+   { pays: "NAMIBIE", zone: "L", idemnite: 90, du:"" },
+   { pays: "NAURU", zone: "L", idemnite: 87.92, du:"" },
+   { pays: "NEPAL", zone: "L", idemnite: 121.59, du:"" },
+   { pays: "NICARAGUA", zone: "L", idemnite: 133.75, du:"" },
+   { pays: "NIGER", zone: "L", idemnite: 118.91, du:"" },
+   { pays: "NIGERIA", zone: "L", idemnite: 273, du:"" },
+   { pays: "NIUE", zone: "L", idemnite: 129.74, du:"" },
+   { pays: "NOUVELLE CALEDONIE", zone: "L", idemnite: 120, du:"" },
+   { pays: "NOUVELLE ZELANDE", zone: "L", idemnite: 235.31, du:"" },
+   { pays: "OMAN", zone: "L", idemnite: 265, du:"" },
+   { pays: "OUGANDA", zone: "L", idemnite: 130, du:"" },
+   { pays: "OUZBEKISTAN", zone: "L", idemnite: 98.14, du:"" },
+   { pays: "PAKISTAN", zone: "L", idemnite: 150.25, du:"" },
+   { pays: "PANAMA", zone: "L", idemnite: 154.59, du:"" },
+   { pays: "PAPOUASIE NOUVELLE GUINEE", zone: "L", idemnite: 172, du:"" },
+   { pays: "PARAGUAY", zone: "L", idemnite: 156.33, du:"" },
+   { pays: "PEROU", zone: "L", idemnite: 147.65, du:"" },
+   { pays: "PHILIPPINES", zone: "L", idemnite: 166.36, du:"" },
+   { pays: "POLYNESIE FRANÇAISE", zone: "L", idemnite: 120, du:"" },
+   { pays: "QATAR", zone: "L", idemnite: 278, du:"" },
+   { pays: "REP CENTRAFRICAINE ", zone: "L", idemnite: 121.96, du:"" },
+   { pays: "REPUBLIQUE DEM DU CONGO", zone: "L", idemnite: 195, du:"" },
+   { pays: "REPUBLIQUE DOMINICAINE", zone: "L", idemnite: 109.52, du:"" },
+   { pays: "REP DU SOUDAN SUD", zone: "L", idemnite: 265.76, du:"" },
+   { pays: "REPUBLIQUE DU YEMEN", zone: "L", idemnite: 188, du:"" },
+   { pays: "RUSSIE", zone: "L", idemnite: 230, du:"" },
+   { pays: "RWANDA", zone: "L", idemnite: 240.58, du:"" },
+   { pays: "SAINT-KITTS-ET-NEVIS", zone: "L", idemnite: 175.44, du:"" },
+   { pays: "SAINT-VINCENT", zone: "L", idemnite: 163.28, du:"" },
+   { pays: "SAINTE-LUCIE", zone: "L", idemnite: 172.83, du:"" },
+   { pays: "SALVADOR", zone: "L", idemnite: 153.73, du:"" },
+   { pays: "SAMOA OCCIDENTALES", zone: "L", idemnite: 120.72, du:"" },
+   { pays: "SAO TOME-ET-PRINCIPE", zone: "L", idemnite: 117.25, du:"" },
+   { pays: "SENEGAL", zone: "L", idemnite: 139.95, du:"" },
+   { pays: "SEYCHELLES", zone: "L", idemnite: 300, du:"" },
+   { pays: "SIERRA LEONE", zone: "L", idemnite: 225.81, du:"" },
+   { pays: "SINGAPOUR", zone: "L", idemnite: 200, du:"" },
+   { pays: "SOMALIE", zone: "L", idemnite: 137.22, du:"" },
+   { pays: "SOUDAN", zone: "L", idemnite: 151.99, du:"" },
+   { pays: "SRI LANKA", zone: "L", idemnite: 155, du:"" },
+   { pays: "SURINAM", zone: "L", idemnite: 156.33, du:"" },
+   { pays: "SWAZILAND", zone: "L", idemnite: 41.95, du:"" },
+   { pays: "SYRIE", zone: "L", idemnite: 154, du:"" },
+   { pays: "TADJIKISTAN", zone: "L", idemnite: 117.25, du:"" },
+   { pays: "TAIWAN", zone: "L", idemnite: 160.83, du:"" },
+   { pays: "TANZANIE", zone: "L", idemnite: 135, du:"" },
+   { pays: "TCHAD", zone: "L", idemnite: 225, du:"" },
+   { pays: "THAILANDE", zone: "L", idemnite: 98.16, du:"" },
+   { pays: "TIMOR ORIENTAL", zone: "L", idemnite: 150, du:"" },
+   { pays: "TOGO", zone: "L", idemnite: 125.98, du:"" },
+   { pays: "TONGA", zone: "L", idemnite: 90.46, du:"" },
+   { pays: "TRINITE ET TOBAGO", zone: "L", idemnite: 231.89, du:"" },
+   { pays: "TURKMENISTAN", zone: "L", idemnite: 102, du:"" },
+   { pays: "TURQUIE", zone: "L", idemnite: 165, du:"" },
+   { pays: "TUVALU", zone: "L", idemnite: 81.16, du:"" },
+   { pays: "UKRAINE", zone: "L", idemnite: 208, du:"" },
+   { pays: "URUGUAY", zone: "L", idemnite: 117.25, du:"" },
+   { pays: "VANUATU", zone: "L", idemnite: 210, du:"" },
+   { pays: "VENEZUELA", zone: "L", idemnite: 195, du:"" },
+   { pays: "VIETNAM", zone: "L", idemnite: 158, du:"" },
+   { pays: "WALLIS ET FUTUNA", zone: "L", idemnite: 120, du:"" },
+   { pays: "ZAMBIE", zone: "L", idemnite: 180, du:"" },
+   { pays: "ZIMBABWE", zone: "L", idemnite: 156.33, du:"" },
+   { pays: "ALBANIE", zone: "E", idemnite: 180, du:"" },
+   { pays: "ALGERIE", zone: "E", idemnite: 99.07, du:"" },
+   { pays: "BOSNIE-HERZEGOVINE", zone: "E", idemnite: 169, du:"" },
+   { pays: "BULGARIE", zone: "E", idemnite: 145, du:"" },
+   { pays: "CROATIE", zone: "E", idemnite: 142, du:"" },
+   { pays: "DANEMARK", zone: "E", idemnite: 222.7, du:"" },
+   { pays: "GRANDE-BRETAGNE", zone: "E", idemnite: 171.87, du:"" },
+   { pays: "HONGRIE", zone: "E", idemnite: 175, du:"" },
+   { pays: "ISLANDE", zone: "E", idemnite: 101.66, du:"" },
+   { pays: "LIECHTENSTEIN", zone: "E", idemnite: 201.23, du:"" },
+   { pays: "MACEDOINE", zone: "E", idemnite: 117, du:"" },
+   { pays: "MAROC", zone: "E", idemnite: 175, du:"" },
+   { pays: "MONTENEGRO", zone: "E", idemnite: 150, du:"" },
+   { pays: "NORVEGE", zone: "E", idemnite: 157.15, du:"" },
+   { pays: "POLOGNE", zone: "E", idemnite: 175, du:"" },
+   { pays: "REPUBLIQUE TCHEQUE", zone: "E", idemnite: 180, du:"" },
+   { pays: "ROUMANIE", zone: "E", idemnite: 160, du:"" },
+   { pays: "SERBIE", zone: "E", idemnite: 150, du:"" },
+   { pays: "SUEDE", zone: "E", idemnite: 214.93, du:"" },
+   { pays: "SUISSE", zone: "E", idemnite: 201.23, du:"" },
+   { pays: "TUNISIE", zone: "E", idemnite: 125, du:"" },
+   { pays: "ALLEMAGNE", zone: "E", idemnite: 156, du:"" },
+   { pays: "BELGIQUE", zone: "E", idemnite: 156, du:"" },
+   { pays: "CHYPRE", zone: "E", idemnite: 156, du:"" },
+   { pays: "ESPAGNE", zone: "E", idemnite: 156, du:"" },
+   { pays: "ESTONIE", zone: "E", idemnite: 156, du:"" },
+   { pays: "FINLANDE", zone: "E", idemnite: 156, du:"" },
+   { pays: "FRANCE", zone: "E", idemnite: 156, du:"" },
+   { pays: "GRÈCE", zone: "E", idemnite: 156, du:"" },
+   { pays: "GUADELOUPE", zone: "E", idemnite: 156, du:"" },
+   { pays: "GUYANE", zone: "E", idemnite: 156, du:"" },
+   { pays: "IRLANDE", zone: "E", idemnite: 156, du:"" },
+   { pays: "ITALIE", zone: "E", idemnite: 156, du:"" },
+   { pays: "LA RÉUNION", zone: "E", idemnite: 156, du:"" },
+   { pays: "LETTONIE", zone: "E", idemnite: 156, du:"" },
+   { pays: "LITUANIE", zone: "E", idemnite: 156, du:"" },
+   { pays: "LUXEMBOURG", zone: "E", idemnite: 156, du:"" },
+   { pays: "MALTE", zone: "E", idemnite: 156, du:"" },
+   { pays: "MARTINIQUE", zone: "E", idemnite: 156, du:"" },
+   { pays: "MAYOTTE", zone: "E", idemnite: 156, du:"" },
+   { pays: "PAYS-BAS", zone: "E", idemnite: 156, du:"" },
+   { pays: "PORTUGAL", zone: "E", idemnite: 156, du:"" },
+   { pays: "SAINT BARTHÉLÉMY", zone: "E", idemnite: 156, du:"" },
+   { pays: "SAINT-MARTIN", zone: "E", idemnite: 156, du:"" },
+   { pays: "SAINT PIERRE ET MIQUELON", zone: "E", idemnite: 156, du:"" },
+   { pays: "SLOVAQUIE", zone: "E", idemnite: 156, du:"" },
+   { pays: "SLOVÉNIE", zone: "E", idemnite: 156, du:"" }
   ]
 }

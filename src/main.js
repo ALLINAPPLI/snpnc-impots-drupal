@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import BootstrapVue from 'bootstrap-vue';
+import BootstrapVue from 'bootstrap-vue'
 import { ValidationProvider, extend, localize } from "vee-validate";
 import fr from "vee-validate/dist/locale/fr.json";
 import * as rules from "vee-validate/dist/rules";

@@ -18,7 +18,6 @@
 </template>
 
 <script>
-//
 
 import fieldsMixin from '../model/fieldsMixin';
 import fields from '../model/fields';
@@ -28,7 +27,7 @@ import DeclarerTab from './DeclarerTab'
 import DeduireTab from './DeduireTab'
 import ResultatTab from './ResultatTab'
 
-import { mapState, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
     mixins: [fieldsMixin],
@@ -44,9 +43,6 @@ export default {
     },
     computed: {
       ...fieldsMixin.mapFields({ fields: ["tabs", "activeTab", "com", "started"], base: "global" }),
-      ...mapState({
-        tabs: state => state.global.tabs,
-    })
     },
     methods: {
       ...mapMutations(['setActiveTab'])

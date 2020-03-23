@@ -15,7 +15,9 @@ export default {
           return this.$store.state[options.base][field];
         },
         set(value) {
-          if (typeof value === "object") {
+          if (Array.isArray(value)) {
+            this.$store.commit("updateField", { base, field: fields[x], value });
+          } else if (typeof value === "object") {
             this.$store.commit( "updateTableField", { base, field: fields[x], ...value });
           } else {
             this.$store.commit("updateField", { base, field: fields[x], value });

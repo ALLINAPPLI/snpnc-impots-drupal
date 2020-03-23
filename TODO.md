@@ -1,16 +1,13 @@
-
-
 # TBD
 
 - disable tabs if compagnie not set
-- custom messages and fields for compagnies
+- custom messages and fields for compagnies, which ones ?
 - disable source map when building
 - modify public path in vue.config.js when building for production
 
 
-- description field can be different when company changes
-- 
 
+- description fields can be different when company changes
 
 # Gotchas
 

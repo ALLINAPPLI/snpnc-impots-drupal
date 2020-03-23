@@ -34,7 +34,7 @@ export default {
     // Deduire
     deduire: {
       cS: 0,
-      iJ: 0,
+      iJ: [],
       fTA: "null",
       fTAp: "null",
       fTAd: {

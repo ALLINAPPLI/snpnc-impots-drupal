@@ -1,24 +1,42 @@
 <template>
-  <b-container>
-    <b-card no-body>
-      <b-tabs card fill>
-        <b-tab title="First" active><p>I'm the first tab</p></b-tab>
-        <b-tab title="Second"><p>I'm the second tab</p></b-tab>
-        <b-tab title="Third"><p>I'm a tab!</p></b-tab>
-      </b-tabs>
-    </b-card>
-
-    <b-row>
-      <b-col>1 of 3</b-col>
-      <b-col>2 of 3</b-col>
-      <b-col>3 of 3</b-col>
-    </b-row>
-  </b-container>
+  <main>
+    <b-table id="resultat" :items="items" :fields="fields" striped small></b-table>
+  </main>
 </template>
 <script>
+
+// import MonthlyTable from './MonthlyTable';
+
+// import html2pdf from 'html2pdf';
+
+// import modelFields from '../model/fields';
+
 export default {
   name: 'ResultatTab',
-  components: {}
+  components: {},
+  data() {
+
+    const fields = [
+      { key: 'item', label: 'Item'},
+      { key: 'comment', label: 'Commentaire'},
+      { key: 'value', label: 'Montant'},
+    ];
+    const items = [];
+
+    // this.$store.state.declarer
+
+    // // Déclarer items
+    // let declarer = ['cNI', 'fH', 'iS', 'iR', 'iT'];
+    // declarer.forEach()
+    // declarer.forEach((id) => {
+
+    //   this.$store.
+    // });
+
+    return {
+      fields, items
+    }
+  }
 }
 </script>
 

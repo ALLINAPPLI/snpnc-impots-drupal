@@ -1,9 +1,12 @@
 <template>
   <b-card no-body>
     <b-tabs card fill>
+
       <b-tab title="Idemnités Journalières" active lazy><b-card-text>
-        TODO
+        <IdemnitesJournalieres :id="f.iJ.id" v-bind:edit="true" v-model="iJ" v-bind:field="f.iJ">
+        </IdemnitesJournalieres>
       </b-card-text></b-tab>
+
       <b-tab title="Frais transport" lazy><b-card-text>
 
         <ValidationProvider :name="f.fTAp.label.toLowerCase()" rules="" v-slot="vCtx">
@@ -119,6 +122,7 @@
 import fieldsMixin from '../model/fieldsMixin';
 import fields from '../model/fields';
 import MonthlyTable from './MonthlyTable';
+import IdemnitesJournalieres from './IdemnitesJournalieres';
 
 import fieldsData from '../model/data';
 
@@ -127,6 +131,7 @@ export default {
   name: 'DeduireTab',
   components: {
     MonthlyTable,
+    IdemnitesJournalieres
   },
   data() {
     // load auto and moto data.
@@ -137,7 +142,10 @@ export default {
   },
   computed: {
     ...fieldsMixin.mapFields({
-      fields: ["fTAp","fTAd","fTMp","fTMd","fTC","cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"],
+      fields: [
+        "fTAp","fTAd","fTMp","fTMd","fTC","iJ",
+        "cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"
+      ],
       base: "deduire"
     }),
   },
