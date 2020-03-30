@@ -18,18 +18,35 @@ export default {
       fH: 0,
       iS: 0,
       iR: {
-        'c241': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c340': ['0','0','0','0','0','0','0','0','0','0','0','0']
+        columns : {
+          c241: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c340: [0,0,0,0,0,0,0,0,0,0,0,0]
+        },
+        total: {
+          c241: 0,
+          c340: 0,
+        },
       },
       iT: {
-        'c250': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c270': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c290': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c292': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c293': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c294': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c299': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-      },
+        columns : {
+          c250: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c270: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c290: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c292: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c293: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c294: [0,0,0,0,0,0,0,0,0,0,0,0],
+          c299: [0,0,0,0,0,0,0,0,0,0,0,0],
+        },
+        total: {
+          c250: 0,
+          c270: 0,
+          c290: 0,
+          c292: 0,
+          c293: 0,
+          c294: 0,
+          c299: 0,
+        }
+      }
     },
     // Deduire
     deduire: {
@@ -38,15 +55,30 @@ export default {
       fTA: "null",
       fTAp: "null",
       fTAd: {
-        'cfTAd' : ['0','0','0','0','0','0','0','0','0','0','0','0']
+        columns: {
+          cfTAd: [0,0,0,0,0,0,0,0,0,0,0,0]
+        },
+        total: {
+          cfTAd: 0
+        }
       },
       fTM: "null",
       fTMp: "null",
       fTMd: {
-        'cfTMd' : ['0','0','0','0','0','0','0','0','0','0','0','0']
+        columns: {
+          cfTMd: [0,0,0,0,0,0,0,0,0,0,0,0]
+        },
+        total: {
+          cfTMd: 0
+        }
       },
       fTC : {
-        'cfTC' : ['0','0','0','0','0','0','0','0','0','0','0','0']
+        columns: {
+          cfTC: [0,0,0,0,0,0,0,0,0,0,0,0]
+        },
+        total: {
+          cfTC: 0
+        }
       },
       fB: 0,
       fCMB: 0,
@@ -57,7 +89,19 @@ export default {
       fF: 0,
     }
   },
-  getters: {},
+  getters: {
+    tableFieldTotal(state) {
+      return (base, field) => {
+        let value = state[base][field];
+        if (typeof value === "number" ) {
+          return value;
+        } else {
+          // sum all the totals
+          return Object.values(value['total']).reduce((acc, item) => acc + item, 0);
+        }
+      }
+    }
+  },
   actions: {
     startForm ( {commit} ) {
       commit('setActiveTab', 'DeclarerTab')
@@ -70,16 +114,23 @@ export default {
   mutations: {
     updateField(state, payload) {
       let {base, field, value} = payload;
+      if (typeof value === "number") {
+        value = Number(value);
+      }
+
       state[base][field] = value;
     },
     updateTableField(state, payload) {
       let {base, field, column, index, value} = payload;
-      state[base][field][column][index] = value;
+      state[base][field].columns[column][index] = Number(value);
+
+      // update column total
+      state[base][field].total[column] = state[base][field].columns[column].reduce((a,b) => { return a + b}, 0);
+
     },
     resetTableField(state, payload) {
       let {base, field, column} = payload;
-      console.log(state[base][field][column]);
-      state[base][field][column].fill('0');
+      state[base][field][column].fill(0);
     },
     setActiveTab(state, id) {
       state.global.activeTab = id

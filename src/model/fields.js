@@ -74,7 +74,7 @@ export default {
   iR : {
     id          : "iR",
     label       : "Idemnités répas",
-    description : `Reportez les lignes 241 et 340 ou les colonnes 'Ventilation
+    description : `Les lignes 241 et 340 ou les colonnes 'Ventilation
     PN imposable' et 'PN non imposable' sur les EP4 de l´année.`,
     columns     : [
       { key: "c241", label : "241" },
@@ -96,16 +96,7 @@ export default {
       { key: "c293", label: "293" },
       { key: "c294", label: "294" },
       { key: "c299", label: "299" }
-    ],
-    default: {
-        'c250': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c270': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c290': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c292': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c293': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c294': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-        'c299': ['0','0','0','0','0','0','0','0','0','0','0','0'],
-      },
+    ]
   },
 
   /**

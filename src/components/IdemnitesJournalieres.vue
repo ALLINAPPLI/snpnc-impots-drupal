@@ -258,6 +258,7 @@ export default {
           valueComment += `${modelData.idemniteZoneEurope} / 2 = ${value}`;
         } else {
 
+
           // une seule rotation en zone europe
           if (1 === rotations) {
 
@@ -315,18 +316,6 @@ export default {
     removeRotation(index) {
       this.rotationList.splice(index, 1);
       this.updateValue();
-    },
-
-    calcRotation(start, end, pays) {
-      // let detail, value;
-      // if (pays.length === 1) {
-      //   detail = "rotation dans la même journée"
-      //   value = modelData.idemniteZoneEurope / 2;
-      // } else {
-
-      // }
-
-      console.log(start, end, pays);
     },
     dateToStr(date) {
         let day = date.getDate();
