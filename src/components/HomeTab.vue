@@ -21,8 +21,9 @@
         </ValidationProvider>
 
         <b-form-group>
-          <b-button id="start" :disabled="!canStart" @click="startForm">Démarrer</b-button>
-          <b-button id="reset" :disabled="canStart" @click="resetForm">Reinitializer</b-button>
+            <b-button :disabled="com == 'null' || started" id="start" @click="toggleForm">
+              Démarrer
+            </b-button>
         </b-form-group>
       </b-col>
     </b-row>
@@ -34,8 +35,6 @@
 import fieldsMixin from '../model/fieldsMixin';
 import fields from '../model/fields';
 
-import { mapActions } from 'vuex';
-
 export default {
   mixins: [fieldsMixin],
   name: 'HomeTab',
@@ -43,13 +42,22 @@ export default {
     return { f: fields };
   },
   computed: {
-    ...fieldsMixin.mapFields({fields: ["com", "started"], base: "global"}),
+    ...fieldsMixin.mapFields("global", "updateField", ["com", "tabs", "activeTab", "started"]),
     canStart() {
-      return this.com !== null && !this.started;
+      return !this.started;
     }
   },
   methods: {
-    ...mapActions(['startForm', 'resetForm']),
+    toggleForm() {
+      if (this.started) {
+        // reset
+        this.tabs.map(tab => tab.disabled = true);
+      } else {
+        this.tabs.map(tab => tab.disabled = false);
+        this.activeTab = 'DeclarerTab';
+      }
+      this.started = !this.started;
+    },
   }
 }
 </script>

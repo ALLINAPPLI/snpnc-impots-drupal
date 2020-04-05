@@ -105,9 +105,9 @@ export default {
   iJ: {
     id          : "indemnites-journalieres",
     label       : `Idemnités journalières`,
-    description : `Attention ! Si vous effectuez un découcher dans au moins une
-    escale de la "Zone monde" au cours de votre rotation CC-MC, alors votre type
-    de rotation est "Zone monde" et non "Zone Euro-Moyen".`
+    description : `Si vous effectuez un découcher dans au moins une escale de
+    la "Zone monde" au cours de votre rotation CC-MC, alors votre type de rotation
+    est "Zone monde" et non "Zone Euro-Moyen".`
   },
   fTA: {
     id          : "frais-transport-automobile",
@@ -121,11 +121,12 @@ export default {
     default     : "null"
   },
   fTAd: {
-    id          : "frais-transport-vehicule-distance",
+    id          : "frais-transport-automobile-distance",
     label       : `Distance parcourue automobile`,
     description : ``,
-    columns     : [ { key: "cfTAd", label : "Distance parcourue" } ],
-    default     : { 'cfTAd' : ['0','0','0','0','0','0','0','0','0','0','0','0'] },
+    columns     : [
+      { key: "cfTAd", label : "Distance parcourue" },
+    ]
   },
   fTM: {
     id          : "frais-transport-deuxroues",

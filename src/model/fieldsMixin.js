@@ -5,23 +5,16 @@ export default {
     },
   },
   // Based on : https://dev.to/matheusgomes062/how-to-make-a-form-handling-with-vuex-6g0
-  mapFields(options) {
+  mapFields(base, mutation, fields) {
     const object = {};
-    let { fields, base } = options;
     for (let x = 0; x < fields.length; x++) {
-      const field = [options.fields[x]];
+      const field = [fields[x]];
       object[field] = {
         get() {
-          return this.$store.state[options.base][field];
+          return this.$store.state[base][field];
         },
         set(value) {
-          if (Array.isArray(value)) {
-            this.$store.commit("updateField", { base, field: fields[x], value });
-          } else if (typeof value === "object") {
-            this.$store.commit( "updateTableField", { base, field: fields[x], ...value });
-          } else {
-            this.$store.commit("updateField", { base, field: fields[x], value });
-          }
+          this.$store.commit(mutation, { base: base, field: fields[x], value: value });
         },
       };
     }

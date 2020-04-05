@@ -1,9 +1,10 @@
 <template>
   <main>
+
+  <slot v-if="edit">
+    <p>{{ field.description }}</p>
     <b-row>
-
       <b-col>
-
         <b-form-group label="Type de rotation">
           <b-form-radio-group
             v-model="zone"
@@ -18,6 +19,8 @@
         <b-form-group label="Sélectionnez la date de début">
           <b-form-datepicker
             id="start-date"
+            :min="startDateMin"
+            :max="startDateMax"
             v-model="startDate"
             locale="fr"
             value-as-date>
@@ -49,10 +52,7 @@
     </b-row>
 
     <b-row align-h="between">
-      <b-col>
-        <b-form-group>{{ detail }}</b-form-group>
-      </b-col>
-
+      <b-col><b-form-group>{{ detail }}</b-form-group></b-col>
       <b-col>
         <b-form-group>
           <b-button
@@ -64,17 +64,13 @@
         </b-form-group>
       </b-col>
     </b-row>
-
     <b-form-group class="mt-2">
-      <label for="idemnites">Idemnité journalières</label>
+      <label for="idemnites">Idemnités journalières</label>
       <b-table id="idemnites" :items="rotationList" :fields="rotationListFields" striped small sticky-header>
-
         <template v-slot:cell(value)="data">{{ data.item.value }} €</template>
-
         <template v-slot:row-details="data">
           <div v-html="data.item.comment"></div>
         </template>
-
         <template v-slot:cell(action)="data">
           <b-button-group>
             <b-button size="sm" @click="removeRotation(data.index)">
@@ -85,16 +81,42 @@
             </b-button>
           </b-button-group>
         </template>
-
       </b-table>
     </b-form-group>
+
+  </slot>
+
+  <slot v-else>
+    <b-row>
+      <b-col>
+        {{ field.description }}
+      </b-col>
+      <b-col class="col-md-auto">
+        <b-button @click="detailsShowing = !detailsShowing">
+        {{ detailsShowing ? 'Cacher' : 'Afficher'}} les détails
+        </b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col class="mt-2">
+        <b-collapse :id="field.id + '-details'" v-model="detailsShowing">
+          <b-table id="idemnites" :items="rotationList" :fields="rotationListFields" small sticky-header>
+            <template v-slot:cell(value)="data">{{ data.item.value }} €</template>
+            <template v-slot:cell(comment)="data">
+              <div v-html="data.item.comment"></div>
+            </template>
+          </b-table>
+        </b-collapse>
+      </b-col>
+    </b-row>
+  </slot>
+
   </main>
 </template>
 
 <script>
 
 import fieldsMixin from '../model/fieldsMixin';
-import fields from '../model/fields';
 import modelData from '../model/data';
 
 export default {
@@ -102,36 +124,48 @@ export default {
   name: "ImdenitesJournalieres",
   props: {
     edit: Boolean,
-    value: Array,
+    value: Object,
     field: Object
   },
   data() {
-    let paysList = modelData.idjournalieres.map(e => { return { value: e.pays , text: e.pays }});
+    let paysList = modelData.idjournalieres.map(e => e.pays);
     // make paysList unique.
     paysList = [...new Set(paysList)];
     // sort payList
     paysList.sort(function(a, b) {
-      var paysA = a.value;
-      var paysB = b.value;
-      if (paysA < paysB) { return -1; }
-      if (paysA > paysB) { return 1;  }
+      if (a < b) { return -1; }
+      if (a > b) { return 1;  }
       // equal
       return 0;
     });
 
+    paysList = paysList.map(item => { return { value: item , text: item } });
     // add placeholder item to list
     paysList.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
 
-    const rotationListFields = [
-      { key: 'startDate', label: 'Date début'},
-      { key: 'endDate', label: 'Date fin'},
-      { key: 'value', label: 'Idemnité'},
-      { key: 'action', label: 'Actions'},
-    ];
+    let rotationListFields;
+
+    if (this.edit) {
+      rotationListFields = [
+        { key: 'startDate', label: 'Date début'},
+        { key: 'endDate', label: 'Date fin'},
+        { key: 'value', label: 'Idemnité'},
+        { key: 'action', label: 'Actions'},
+      ];
+    } else {
+      rotationListFields = [
+        { key: 'startDate', label: 'Début'},
+        { key: 'endDate', label: 'Fin'},
+        { key: 'comment', label: 'Calcul'},
+        { key: 'value', label: 'Montant'},
+      ];
+    }
 
     return {
       paysList,
       startDate: null,
+      startDateMin: new Date(modelData.year, 0, 1),
+      startDateMax: new Date(modelData.year, 11, 31),
       endDate: null,
       endDateMin: null,
       endDateMax: null,
@@ -143,7 +177,7 @@ export default {
       cRotationPaysKey: 0,
       rotationListFields,
       rotationList : [],
-      f: fields
+      detailsShowing: false,
     }
   },
   watch: {
@@ -157,11 +191,28 @@ export default {
       this.setupRotation();
     },
     cRotationPays() {
-      this.cRotationData = this.cRotationPays.map(e => {
+      // Fetch rotation from data
+      this.cRotationData = this.cRotationPays.map((e, index) => {
         if (e === "null") {
           return;
         }
-        let item = modelData.idjournalieres.find(i => i.pays === e);
+        // filter dated rotations (NEW-YORK, NEW-YORK ...)
+        let dateOfRotation = this.addDays(this.startDate, index);
+        let item = modelData.idjournalieres.filter(i => i.pays === e);
+        if (item.length > 1) {
+          let datedItem = false;
+          for (const j of item) {
+            if (j.du !== "" && dateOfRotation >= this.dateFromStr(j.du)) {
+              datedItem = j;
+            } else if(datedItem === false && j.du === "") {
+              datedItem = j;
+            }
+          }
+          item = datedItem;
+        } else {
+          item = item[0];
+        }
+        //
         // by default zone is Europe, but if even 1 country is Monde, zone is Monde
         if (item.zone === modelData.zoneMonde.key && this.zone != item.zone) {
           this.zone = item.zone;
@@ -321,7 +372,12 @@ export default {
         let day = date.getDate();
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
-
+        if (month < 10) {
+          month = "0" + month;
+        }
+        if (day < 10) {
+          day = "0" + day;
+        }
         return day + '/' + month + '/' + year;
     },
     dateFromStr(date) {
@@ -344,7 +400,7 @@ export default {
   },
   mounted() {
     this.initRotation();
-    this.rotationList = this.value;
+    this.rotationList = this.value.items;
   }
 }
 </script>

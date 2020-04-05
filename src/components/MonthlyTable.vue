@@ -1,11 +1,13 @@
 <template>
   <main>
-    <p>
-      {{ field.description }}
-      <b-button v-if="!edit" @click="detailsShowing = !detailsShowing">
+    <b-row>
+      <b-col>{{ field.description }}</b-col>
+      <b-col v-if="!edit" class="col-md-auto">
+        <b-button @click="detailsShowing = !detailsShowing">
         {{ detailsShowing ? 'Cacher' : 'Afficher'}} les détails
-      </b-button>
-    </p>
+        </b-button>
+      </b-col>
+    </b-row>
     <b-collapse :id="field.id + '-details'" v-model="detailsShowing">
       <b-table  caption-top :items="items" :fields="fields">
         <template v-slot:cell()="row">
@@ -24,7 +26,7 @@
           <slot v-else>{{ row.value }}</slot>
         </template>
         <template  slot="bottom-row" slot-scope="data">
-          <td class="table-success" v-for="(column, index) in data.fields" :key="column.key">
+          <td class="font-weight-bold" v-for="(column, index) in data.fields" :key="column.key">
             <slot v-if="index == 0">Total</slot>
             <slot v-else>{{ value.total[column.key] }}</slot>
           </td>
@@ -50,7 +52,7 @@ export default {
   data() {
     let months = modelFields.months;
     let items = [];
-    console.log(this.value);
+
     for(let i = 0; i <= 11; i++) {
       let item = { 'month' : months[i] };
       for(let j = 0; j < this.field.columns.length; j++) {

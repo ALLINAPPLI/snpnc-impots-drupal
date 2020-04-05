@@ -27,8 +27,6 @@ import DeclarerTab from './DeclarerTab'
 import DeduireTab from './DeduireTab'
 import ResultatTab from './ResultatTab'
 
-import { mapMutations } from 'vuex';
-
 export default {
     mixins: [fieldsMixin],
     name: 'app',
@@ -42,10 +40,12 @@ export default {
       return { f: fields }
     },
     computed: {
-      ...fieldsMixin.mapFields({ fields: ["tabs", "activeTab", "com", "started"], base: "global" }),
+      ...fieldsMixin.mapFields("global", "updateField", ["tabs", "activeTab", "com", "started"]),
     },
     methods: {
-      ...mapMutations(['setActiveTab'])
-    },
+      setActiveTab(id) {
+        this.activeTab = id;
+      }
+    }
 }
 </script>

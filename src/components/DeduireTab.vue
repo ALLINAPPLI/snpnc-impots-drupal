@@ -12,13 +12,20 @@
         <ValidationProvider :name="f.fTAp.label.toLowerCase()" rules="" v-slot="vCtx">
           <b-form-group :id="f.fTAp.id + '-group' " :label="f.fTAp.label" :label-for="f.fTAp.id">
             <b-form-text :id="f.fTAp.id + '-help'">{{ f.fTAp.description }}</b-form-text>
-            <b-form-select :id="f.fTAp.id" v-model="fTAp" :state="getValidationState(vCtx)" :options="fTApoptions"/>
+            <b-form-select
+              :id="f.fTAp.id" v-model="fTAp" :state="getValidationState(vCtx)" :options="fTApoptions"/>
             <b-form-invalid-feedback :id="f.fTAp.id + '-feedback'">{{ vCtx.errors[0] }}</b-form-invalid-feedback>
           </b-form-group>
         </ValidationProvider>
         <b-collapse :visible="fTAp !== f.fTAp.default" class="mt-2">
           <b-form-group :id="f.fTAd.id + '-group' " :label="f.fTAd.label" :label-for="f.fTAd.id">
-            <MonthlyTable :id="f.fTAd.id" v-bind:edit="true" v-model="fTAd" v-bind:field="f.fTAd"></MonthlyTable>
+            <MonthlyTable
+              :id="f.fTAd.id"
+              v-bind:edit="true"
+              v-model="fTAd"
+              v-on:input="updateTransportFTA()"
+              v-bind:field="f.fTAd">
+            </MonthlyTable>
           </b-form-group>
         </b-collapse>
 
@@ -31,7 +38,13 @@
         </ValidationProvider>
         <b-collapse :visible="fTMp !== f.fTMp.default" class="mt-2">
           <b-form-group :id="f.fTMd.id + '-group' " :label="f.fTMd.label" :label-for="f.fTMd.id">
-            <MonthlyTable :id="f.fTMd.id" v-bind:edit="true" v-model="fTMd" v-bind:field="f.fTMd"></MonthlyTable>
+            <MonthlyTable
+              :id="f.fTMd.id"
+              v-bind:edit="true"
+              v-model="fTMd"
+              v-on:input="updateTransportFTM()"
+              v-bind:field="f.fTMd">
+            </MonthlyTable>
           </b-form-group>
         </b-collapse>
 
@@ -120,11 +133,11 @@
 <script>
 
 import fieldsMixin from '../model/fieldsMixin';
-import fields from '../model/fields';
+import modelFields from '../model/fields';
 import MonthlyTable from './MonthlyTable';
 import IdemnitesJournalieres from './IdemnitesJournalieres';
 
-import fieldsData from '../model/data';
+import modelData from '../model/data';
 
 export default {
   mixins: [fieldsMixin],
@@ -135,29 +148,66 @@ export default {
   },
   data() {
     // load auto and moto data.
-    let fTApoptions = fieldsData.idtransport.auto.map(a => { return { value: a.key, text: a.label }} );
-    let fTMpoptions = fieldsData.idtransport.moto.map(a => { return { value: a.key, text: a.label }} );
+    let fTApoptions = modelData.idtransport.auto.map(a => { return { value: a.key, text: a.label }} );
+    let fTMpoptions = modelData.idtransport.moto.map(a => { return { value: a.key, text: a.label }} );
 
-    return { f : fields, fTApoptions, fTMpoptions};
+    return { f : modelFields, fTApoptions, fTMpoptions};
   },
   computed: {
-    ...fieldsMixin.mapFields({
-      fields: [
-        "fTAp","fTAd","fTMp","fTMd","fTC","iJ",
-        "cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"
-      ],
-      base: "deduire"
-    }),
+    ...fieldsMixin.mapFields("deduire", "updateField", ["fTAp", "fTMp"]),
+    ...fieldsMixin.mapFields("deduire", "updateIdemnitesJournalieres", ["iJ"]),
+    ...fieldsMixin.mapFields("deduire", "updateDataTableField", ["fTAd", "fTMd", "fTC"]),
+    ...fieldsMixin.mapFields(
+      "deduire",
+      "updateDataField",
+      ["fTA", "fTM", "cS", "fB", "fCMB", "fTI", "fBa", "fDR", "fL", "fF"]
+    ),
   },
   watch: {
     fTAp() {
-      if (this.fTAp === fields.fTAp.default) {
-        // RESET THE fTAd value !!!!
-        // SAME FOR MOTO
-      }
-    }
+      this.updateTransportFTA();
+    },
+    fTMp() {
+      this.updateTransportFTM();
+    },
+
   },
-  methods: {},
+  methods: {
+    updateTransportFTA() {
+      if (this.fTAp === "null") {
+        modelFields.fTA.description = `Je n'ai pas de frais d'automobile à déduire`;
+        this.$store.state['deduire']['fTA'] = 0;
+      } else {
+        let bareme = modelData.idtransport.auto.find(e => e.key == this.fTAp);
+        let distance = this.$store.state['deduire']['fTAd']['tableTotal'];
+        bareme = bareme.distance.reverse().find(e => e.min < distance);
+
+        modelFields.fTA.description = `
+          Puissance ${this.fTAp}, distance ${distance} <br/>
+          Total = ${distance} * ${bareme.coef} + ${bareme.ajust}
+        `;
+        let total = Math.round((distance * bareme.coef) + bareme.ajust);
+        this.$store.state['deduire']['fTA'] = total;
+      }
+    },
+    updateTransportFTM() {
+      if (this.fTMp === "null") {
+        modelFields.fTA.description = `Je n'ai pas de frais d'automobile à déduire`;
+        this.$store.state['deduire']['fTM'] = 0;
+      } else {
+        let bareme = modelData.idtransport.moto.find(e => e.key == this.fTAp);
+        let distance = this.$store.state['deduire']['fTMd']['tableTotal'];
+        bareme = bareme.distance.reverse().find(e => e.min < distance);
+
+        modelFields.fTM.description = `
+          Puissance ${this.fTMp}, distance ${distance} <br/>
+          Total = ${distance} * ${bareme.coef} + ${bareme.ajust}
+        `;
+        let total = Math.round((distance * bareme.coef) + bareme.ajust);
+        this.$store.state['deduire']['fTM'] = total;
+      }
+    },
+  },
 }
 </script>
 

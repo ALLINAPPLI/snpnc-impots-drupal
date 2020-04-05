@@ -62,7 +62,8 @@ export default {
     return { f : fields };
   },
   computed: {
-    ...fieldsMixin.mapFields({fields: ["cNI", "fH", "iS", 'iR', 'iT'], base: "declarer"}),
+    ...fieldsMixin.mapFields("declarer", "updateDataField", ["cNI", "fH", "iS"]),
+    ...fieldsMixin.mapFields("declarer", "updateDataTableField", ['iR', 'iT']),
   },
 }
 </script>

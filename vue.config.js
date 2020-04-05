@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/snpnc-impots/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/impots/' : '/',
 }
