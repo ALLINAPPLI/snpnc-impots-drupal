@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <b-row class="mt-3">
       <b-col><b-img rounded fluid :src="require('../assets/logo.png')"></b-img></b-col>
       <b-col cols="9" v-html="f.intro"></b-col>

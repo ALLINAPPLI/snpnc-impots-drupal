@@ -56,7 +56,7 @@
 
       <b-tab title="Cotisations syndicales" lazy><b-card-text>
 
-        <ValidationProvider :name="f.cS.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.cS.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.cS.id + '-group' " :label="f.cS.label" :label-for="f.cS.id">
             <b-form-text :id="f.cS.id + '-help'">{{ f.cS.description }}</b-form-text>
             <b-form-input :id="f.cS.id" v-model="cS" :state="getValidationState(vCtx)"/>
@@ -68,7 +68,7 @@
 
       <b-tab title="Autres frais" lazy><b-card-text>
 
-        <ValidationProvider :name="f.fB.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fB.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fB.id + '-group' " :label="f.fB.label" :label-for="f.fB.id">
             <b-form-text :id="f.fB.id + '-help'">{{ f.fB.description }}</b-form-text>
             <b-form-input :id="f.fB.id" v-model="fB" :state="getValidationState(vCtx)"/>
@@ -76,7 +76,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fCMB.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fCMB.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fCMB.id + '-group' " :label="f.fCMB.label" :label-for="f.fCMB.id">
             <b-form-text :id="f.fCMB.id + '-help'">{{ f.fCMB.description }}</b-form-text>
             <b-form-input :id="f.fCMB.id" v-model="fCMB" :state="getValidationState(vCtx)"/>
@@ -84,7 +84,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fTI.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fTI.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fTI.id + '-group' " :label="f.fTI.label" :label-for="f.fTI.id">
             <b-form-text :id="f.fTI.id + '-help'">{{ f.fTI.description }}</b-form-text>
             <b-form-input :id="f.fTI.id" v-model="fTI" :state="getValidationState(vCtx)"/>
@@ -92,7 +92,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fBa.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fBa.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fBa.id + '-group' " :label="f.fBa.label" :label-for="f.fBa.id">
             <b-form-text :id="f.fBa.id + '-help'">{{ f.fBa.description }}</b-form-text>
             <b-form-input :id="f.fBa.id" v-model="fBa" :state="getValidationState(vCtx)"/>
@@ -100,7 +100,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fDR.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fDR.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fDR.id + '-group' " :label="f.fDR.label" :label-for="f.fDR.id">
             <b-form-text :id="f.fDR.id + '-help'">{{ f.fDR.description }}</b-form-text>
             <b-form-input :id="f.fDR.id" v-model="fDR" :state="getValidationState(vCtx)"/>
@@ -108,7 +108,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fL.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fL.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fL.id + '-group' " :label="f.fL.label" :label-for="f.fL.id">
             <b-form-text :id="f.fL.id + '-help'">{{ f.fL.description }}</b-form-text>
             <b-form-input :id="f.fL.id" v-model="fL" :state="getValidationState(vCtx)"/>
@@ -116,7 +116,7 @@
           </b-form-group>
         </ValidationProvider>
 
-        <ValidationProvider :name="f.fF.label.toLowerCase()" rules="required|numeric|min_value:0" v-slot="vCtx">
+        <ValidationProvider :name="f.fF.label.toLowerCase()" rules="required|min:1|min_value:0" v-slot="vCtx">
           <b-form-group :id="f.fF.id + '-group' " :label="f.fF.label" :label-for="f.fF.id">
             <b-form-text :id="f.fF.id + '-help'">{{ f.fF.description }}</b-form-text>
             <b-form-input :id="f.fF.id" v-model="fF" :state="getValidationState(vCtx)"/>
@@ -174,16 +174,16 @@ export default {
   },
   methods: {
     updateTransportFTA() {
-      if (this.fTAp === "null") {
+      if (this.fTAp === "null" || this.fTAd.tableTotal == 0) {
         modelFields.fTA.description = `Je n'ai pas de frais d'automobile à déduire`;
         this.$store.state['deduire']['fTA'] = 0;
-      } else {
+      } else if (this.fTAd.tableTotal > 0)  {
         let bareme = modelData.idtransport.auto.find(e => e.key == this.fTAp);
-        let distance = this.$store.state['deduire']['fTAd']['tableTotal'];
-        bareme = bareme.distance.reverse().find(e => e.min < distance);
+        let distance = this.fTAd.tableTotal;
+        bareme = bareme.distance.find(e => e.min < distance);
 
         modelFields.fTA.description = `
-          Puissance ${this.fTAp}, distance ${distance} <br/>
+          Puissance ${this.fTAp}, distance ${distance} \n
           Total = ${distance} * ${bareme.coef} + ${bareme.ajust}
         `;
         let total = Math.round((distance * bareme.coef) + bareme.ajust);
@@ -191,16 +191,16 @@ export default {
       }
     },
     updateTransportFTM() {
-      if (this.fTMp === "null") {
-        modelFields.fTA.description = `Je n'ai pas de frais d'automobile à déduire`;
+      if (this.fTMp === "null" || this.fTAd.tableTotal == 0) {
+        modelFields.fTM.description = `Je n'ai pas de frais d'automobile à déduire`;
         this.$store.state['deduire']['fTM'] = 0;
-      } else {
-        let bareme = modelData.idtransport.moto.find(e => e.key == this.fTAp);
-        let distance = this.$store.state['deduire']['fTMd']['tableTotal'];
-        bareme = bareme.distance.reverse().find(e => e.min < distance);
+      } else if (this.fTMd.tableTotal > 0)  {
+        let bareme = modelData.idtransport.moto.find(e => e.key == this.fTMp);
+        let distance = this.fTMd.tableTotal;
+        bareme = bareme.distance.find(e => e.min < distance);
 
         modelFields.fTM.description = `
-          Puissance ${this.fTMp}, distance ${distance} <br/>
+          Puissance ${this.fTMp}, distance ${distance} \n
           Total = ${distance} * ${bareme.coef} + ${bareme.ajust}
         `;
         let total = Math.round((distance * bareme.coef) + bareme.ajust);
@@ -210,5 +210,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

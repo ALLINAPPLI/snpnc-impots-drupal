@@ -2,7 +2,7 @@
   <main>
 
   <slot v-if="edit">
-    <p>{{ field.description }}</p>
+    <p>{{ field.help }}</p>
     <b-row>
       <b-col>
         <b-form-group label="Type de rotation">
@@ -46,7 +46,7 @@
     <b-row cols="1" cols-sm="2" cols-md="4">
       <b-col v-for="(pays, index) in cRotationPays" :key="pays.value">
         <b-form-group :label="(index + 1) + ' ON'">
-          <b-form-select v-model="cRotationPays[index]" :options="paysList" :key="cRotationPaysKey"></b-form-select>
+          <b-form-select v-model="cRotationPays[index]" :options="paysListFiltered" :key="cRotationPaysKey"></b-form-select>
         </b-form-group>
       </b-col>
     </b-row>
@@ -100,7 +100,7 @@
     <b-row>
       <b-col class="mt-2">
         <b-collapse :id="field.id + '-details'" v-model="detailsShowing">
-          <b-table id="idemnites" :items="rotationList" :fields="rotationListFields" small sticky-header>
+          <b-table :id="field.id + '-table'" :items="rotationList" :fields="rotationListFields" small sticky-header>
             <template v-slot:cell(value)="data">{{ data.item.value }} €</template>
             <template v-slot:cell(comment)="data">
               <div v-html="data.item.comment"></div>
@@ -128,20 +128,26 @@ export default {
     field: Object
   },
   data() {
-    let paysList = modelData.idjournalieres.map(e => e.pays);
-    // make paysList unique.
-    paysList = [...new Set(paysList)];
-    // sort payList
-    paysList.sort(function(a, b) {
-      if (a < b) { return -1; }
-      if (a > b) { return 1;  }
-      // equal
-      return 0;
-    });
+    // let paysList = modelData.idjournalieres.map(e => e.pays);
+    let paysList = [];
+    const map = new Map();
+    for (const item of modelData.idjournalieres) {
+      if(!map.has(item.pays)) {
+        map.set(item.pays, true);    // set any value to Map
+        paysList.push({ pays: item.pays, zone: item.zone});
+      }
+    }
 
-    paysList = paysList.map(item => { return { value: item , text: item } });
+    // Set the default zone to E
+    let zone = "E";
+    let paysListFiltered = paysList
+      .filter(item => item.zone == zone)
+      .map(item => {
+        return { value: item.pays, text: item.pays }
+    });
     // add placeholder item to list
-    paysList.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
+    paysListFiltered.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
+
 
     let rotationListFields;
 
@@ -163,6 +169,7 @@ export default {
 
     return {
       paysList,
+      paysListFiltered,
       startDate: null,
       startDateMin: new Date(modelData.year, 0, 1),
       startDateMax: new Date(modelData.year, 11, 31),
@@ -170,7 +177,7 @@ export default {
       endDateMin: null,
       endDateMax: null,
       detail: "",
-      zone: null,
+      zone,
       zoneList: [ modelData.zoneEurope, modelData.zoneMonde ],
       cRotationData: [],
       cRotationPays: ["null"],
@@ -182,6 +189,16 @@ export default {
   },
   watch: {
     zone() {
+
+      this.paysListFiltered = this.paysList
+        .filter(item => item.zone == this.zone)
+        .map(item => {
+          return { value: item.pays, text: item.pays }
+      });
+
+      // add placeholder item to list
+      this.paysListFiltered.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
+
       this.setupRotation();
     },
     startDate() {
@@ -249,8 +266,10 @@ export default {
 
       // if zone monde, min end date is start date + 1
       if (this.zone === modelData.zoneMonde.key) {
+        // Set end date.
         endDateMin = this.addDays(this.startDate, 1);
       } else {
+        // Set end date.
         endDateMin = new Date(this.startDate);
       }
 
@@ -299,7 +318,7 @@ export default {
 
       // Zone Europe
       if (this.isZoneEurope) {
-        comment = "Zone Europe<br/>";
+        comment = "Zone Europe\n";
 
         // rotation dans la même journée
         if (0 === this.dateDiffDays(this.startDate, this.endDate)) {
@@ -313,28 +332,28 @@ export default {
           // une seule rotation en zone europe
           if (1 === rotations) {
 
-            value = this.cRotationData[0].idemnite * 1.5;
+            value = Math.round(this.cRotationData[0].idemnite * 1.5);
             paysComment  += this.cRotationData[0].pays;
             valueComment += `${this.cRotationData[0].idemnite} * 1.5 = ${value}`;
           } else {
 
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += this.cRotationData[i].idemnite;
+              value        += Math.round(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
 
             // la dernière rotation.
-            value        += (1.5 * this.cRotationData[i].idemnite);
+            value        += Math.round((1.5 * this.cRotationData[i].idemnite));
             valueComment += `1,5 x ${this.cRotationData[i].idemnite} = ${value}`;
             paysComment  += this.cRotationData[i].pays;
           }
         }
-        comment += `${paysComment}<br/>${valueComment}`;
+        comment += `${paysComment}\n${valueComment}`;
       // Zone Monde
       } else {
-        comment += 'Zone Monde<br/>';
+        comment += 'Zone Monde\n';
 
         if (1 === rotations) {
           value        += 2 * this.cRotationData[0].idemnite;
@@ -343,17 +362,17 @@ export default {
         } else {
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += this.cRotationData[i].idemnite;
+              value        += Math.round(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
             // la dernière rotation.
-            value        += this.cRotationData[i].idemnite;
+            value        += Math.round(this.cRotationData[i].idemnite);
             paysComment  += this.cRotationData[i].pays;
             valueComment += `${this.cRotationData[i].idemnite} = ${value}`;
         }
 
-        comment += `${paysComment}<br/>${valueComment}`;
+        comment += `${paysComment}\n${valueComment}`;
       }
 
       value = Math.round(value);

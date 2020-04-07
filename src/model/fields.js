@@ -14,21 +14,8 @@ export default {
     "Décembre"
   ],
   year: new Date().getFullYear(),
-  intro: `<p>
-          Le calcul de vos frais réels est facilité et optimisé par
-          ce logiciel que vous propose le SNPNC. Il permet d'effectuer des simulations
-          personnalisées et d'imprimer le détail des montants à déclarer AJ ou BJ ainsi
-          que les montants à déduire AK ou BK. La méthode de déclaration des frais
-          réels est celle que le SNPNC a négociée avec la Direction de la Législation
-          Fiscale du Ministère de l’Economie, des Finances et de l’Industrie en 1999.
-        </p>
-        <p>
-          <strong>
-          NB : L'utilisation de cet outil informatique ne saurait engager la
-          responsabilité du SNPNC, si des erreurs ou omissions étaient relevées
-          par l'administration.
-          </strong>
-        </p>`,
+  intro: `<p>  Le calcul de vos frais réels est facilité et optimisé par ce logiciel que vous propose le SNPNC. Il permet d'effectuer des simulations personnalisées et d'imprimer le détail des montants à déclarer AJ ou BJ ainsi que les montants à déduire AK ou BK. La méthode de déclaration des frais réels est celle que le SNPNC a négociée avec la Direction de la Législation Fiscale du Ministère de l’Economie, des Finances et de l’Industrie en 1999.</p>
+    <p><strong>NB : L'utilisation de cet outil informatique ne saurait engager la responsabilité du SNPNC, si des erreurs ou omissions étaient relevées par l'administration.</strong></p>`,
   com: {
     id            : "compagnie",
     label         : `Compagnie`,
@@ -62,7 +49,7 @@ export default {
   },
   iS : {
     id          : "iS",
-    label       : `Idemnités journalières de la Sécurité Sociale`,
+    label       : `Indemnités journalières de la Sécurité Sociale`,
     description : `IJ perçues de la Sécurité Sociale pour congés maladie ou
     maternité ou paternité selon le relevé adressé par la CPAM. Déclarer 50%
     des IJ consécutives à un accident du travail,  ne pas déclarer celles
@@ -73,39 +60,62 @@ export default {
   },
   iR : {
     id          : "iR",
-    label       : "Idemnités répas",
-    description : `Les lignes 241 et 340 ou les colonnes 'Ventilation
+    label       : "Indemnités repas",
+    description : `Les lignes IND.REPAS et INDEMNITE REPAS ou les colonnes 'Ventilation
     PN imposable' et 'PN non imposable' sur les EP4 de l´année.`,
     columns     : [
-      { key: "c241", label : "241" },
-      { key: "c340", label : "340" }
+      { key: "cir", label : "IND.REPAS" },
+      { key: "cinr", label : "INDEMNITE REPAS" }
+    ]
+  },
+  iRa : {
+    id          : "iRa",
+    label       : "Indemnités repas",
+    description : `Additionner les sommes figurant sur chaque bulletin de paie
+    de l’année concernant des indemnités repas.`,
+    columns     : [
+      { key: "cinr", label : "INDEMNITE REPAS" }
     ]
   },
   iT : {
     id          : "iT",
-    label       : "Idemnités transport",
+    label       : "Indemnités transport",
     description : `Additionner les sommes figurant sur chaque bulletin de
     paie de l’année concernant des indemnités kilométriques , une prise en
     charge (totale ou partielle) de Pass Navigo, ou encore d’un forfait
     montées au terrain`,
     columns     : [
-      { key: "c250", label: "250" },
-      { key: "c270", label: "270" },
-      { key: "c290", label: "290" },
-      { key: "c292", label: "292" },
-      { key: "c293", label: "293" },
-      { key: "c294", label: "294" },
-      { key: "c299", label: "299" }
+      { key: "cit", label: "IND.TRANSPORT" },
+      { key: "cft", label: "FRAIS TRANSPORT" },
+      { key: "crcn", label: "REMB CARTE NAVIGO" },
+      { key: "cfrt", label: "FRAIS REELS TRANSP" },
+      { key: "ctc", label: "I.TAXI/COURRIER" },
     ]
   },
-
+  iTa : {
+    id          : "iTa",
+    label       : "Indemnités transport",
+    description : `Additionner les sommes figurant sur chaque bulletin de
+    paie de l’année concernant des indemnités kilométriques , une prise en
+    charge (totale ou partielle) de Pass Navigo, ou encore d’un forfait
+    montées au terrain`,
+    columns     : [
+      { key: "cit", label: "INDEMNITÉS TRANSPORT" },
+    ]
+  },
+  totalDeclarer : {
+    id : "totalDeclarer",
+    label : 'Total à déclarer AJ ou BJ',
+    description : ''
+  },
   /**
    * Deduire
    */
   iJ: {
     id          : "indemnites-journalieres",
-    label       : `Idemnités journalières`,
-    description : `Si vous effectuez un découcher dans au moins une escale de
+    label       : `Indemnités journalières`,
+    description : 'Frais en escale',
+    help        : `Si vous effectuez un découcher dans au moins une escale de
     la "Zone monde" au cours de votre rotation CC-MC, alors votre type de rotation
     est "Zone monde" et non "Zone Euro-Moyen".`
   },
@@ -215,5 +225,10 @@ export default {
     label       : `Formation`,
     description : `En vue d´acquérir une qualification permettant d´améliorer
     la situation professionnelle, ils peuvent faire l´objet d´une déduction.`,
+  },
+  totalDeduire : {
+    id : "totalDeduire",
+    label : 'Total à déduire AK ou BK',
+    description : ''
   }
 }

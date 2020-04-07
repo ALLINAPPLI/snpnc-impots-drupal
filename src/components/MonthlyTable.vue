@@ -9,7 +9,7 @@
       </b-col>
     </b-row>
     <b-collapse :id="field.id + '-details'" v-model="detailsShowing">
-      <b-table  caption-top :items="items" :fields="fields">
+      <b-table :id="field.id + '-table'"  :items="items" :fields="fields" small caption-top>
         <template v-slot:cell()="row">
           <slot v-if="row.field.key === 'month'">{{ row.value }}</slot>
           <ValidationProvider v-else-if="edit"

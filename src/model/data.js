@@ -8,47 +8,47 @@ export default {
       },
       {
         key : '3CV',
-        label: `3 CV`,
+        label: '3 CV',
         distance: [
-          { min: 0, coef: 0.456, ajust: 0 },
-          { min: 5000, coef: 0.273, ajust: 915 },
           { min: 20000, coef: 0.318, ajust: 0 },
+          { min: 5000, coef: 0.273, ajust: 915 },
+          { min: 0, coef: 0.456, ajust: 0 },
         ]
       },
       {
         key : '4CV',
-        label: "4 CV",
+        label: '4 CV',
         distance: [
-          { min: 0, coef: 0.523, ajust: 0 },
-          { min: 5000, coef: 0.294, ajust: 1147 },
           { min: 20000, coef: 0.352, ajust: 0 },
+          { min: 5000, coef: 0.294, ajust: 1147 },
+          { min: 0, coef: 0.523, ajust: 0 },
         ]
       },
       {
         key : '5CV',
         label: "5 CV",
         distance: [
-          { min: 0, coef: 0.548, ajust: 0 },
-          { min: 5000, coef: 0.308, ajust: 1200 },
           { min: 20000, coef: 0.368, ajust: 0 },
+          { min: 5000, coef: 0.308, ajust: 1200 },
+          { min: 0, coef: 0.548, ajust: 0 },
         ]
       },
       {
         key : '6CV',
         label: "6 CV",
         distance: [
-          { min: 0, coef: 0.574, ajust: 0 },
-          { min: 5000, coef: 0.323, ajust: 1256 },
           { min: 20000, coef: 0.386, ajust: 0 },
+          { min: 5000, coef: 0.323, ajust: 1256 },
+          { min: 0, coef: 0.574, ajust: 0 },
         ]
       },
       {
         key : '7CV',
         label: "7 CV et plus",
         distance: [
-          { min: 0, coef: 0.601, ajust: 0 },
-          { min: 5000, coef: 0.340, ajust: 1301 },
           { min: 20000, coef: 0.405, ajust: 0 },
+          { min: 5000, coef: 0.340, ajust: 1301 },
+          { min: 0, coef: 0.601, ajust: 0 },
         ]
       },
     ],
@@ -61,36 +61,36 @@ export default {
         key : '50',
         label: "< 50cm³",
         distance: [
-          { min: 0, coef: 0.272, ajust: 0 },
-          { min: 2000, coef: 0.064, ajust: 416 },
           { min: 5000, coef: 0.147, ajust: 0 },
+          { min: 2000, coef: 0.064, ajust: 416 },
+          { min: 0, coef: 0.272, ajust: 0 },
         ]
       },
       {
         key : '2CV',
         label: "1 ou 2 CV",
         distance: [
-          { min: 0, coef: 0.341, ajust: 0 },
-          { min: 3000, coef: 0.085, ajust: 768 },
           { min: 6000, coef: 0.213, ajust: 0 },
+          { min: 3000, coef: 0.085, ajust: 768 },
+          { min: 0, coef: 0.341, ajust: 0 },
         ]
       },
       {
         key : '5CV',
         label: "3, 4 ou 5 CV",
         distance: [
-          { min: 0, coef: 0.404, ajust: 0 },
-          { min: 3000, coef: 0.071, ajust: 999 },
           { min: 6000, coef: 0.237, ajust: 0 },
+          { min: 3000, coef: 0.071, ajust: 999 },
+          { min: 0, coef: 0.404, ajust: 0 },
         ]
       },
       {
         key : '6',
         label: "6 CV et plus",
         distance: [
-          { min: 0, coef: 0.523, ajust: 0 },
-          { min: 3000, coef: 0.068, ajust: 1365 },
           { min: 6000, coef: 0.295, ajust: 0 },
+          { min: 3000, coef: 0.068, ajust: 1365 },
+          { min: 0, coef: 0.523, ajust: 0 },
         ]
       },
     ]

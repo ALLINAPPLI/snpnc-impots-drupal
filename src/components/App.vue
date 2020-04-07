@@ -1,19 +1,21 @@
 <template>
-  <b-container>
-    <b-card no-body>
-      <b-tabs card>
-        <b-tab no-body
-            v-for="tab in tabs"
-            :key="tab.id"
-            :title="tab.title"
-            :active="activeTab == tab.id"
-            :disabled="tab.disabled"
-            @click="setActiveTab(tab.id)"
-        >
-          <b-card-text><component v-bind:is="activeTab"/></b-card-text>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+  <b-container fluid>
+    <b-row><b-col>
+      <b-card no-body>
+        <b-tabs card>
+          <b-tab no-body
+              v-for="tab in tabs"
+              :key="tab.id"
+              :title="tab.title"
+              :active="activeTab == tab.id"
+              :disabled="tab.disabled"
+              @click="setActiveTab(tab.id)"
+          >
+            <b-card-text><component v-bind:is="activeTab"/></b-card-text>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+    </b-col></b-row>
   </b-container>
 </template>
 

@@ -1,7 +1,11 @@
 <template>
   <b-card>
+    <b-button-group>
+      <b-button size="sm" @click="savePDF()">Sauvegarder en PDF</b-button>
+    </b-button-group>
     <h1>A déclarer</h1>
-    <table class="table">
+    <img :src="this.base64logo()" style="display: none"/>
+    <table id="declarer-table" class="table">
       <thead>
         <tr>
           <th scope="col">A déclarer</th>
@@ -26,30 +30,48 @@
           <td>{{ iS }}</td>
         </tr>
         <tr>
-          <td>{{ f.iR.label }}</td>
-          <td>
-            <MonthlyTable v-bind:edit="false" v-model="iR" v-bind:field="f.iR"></MonthlyTable>
-          </td>
-          <td>{{ iR.tableTotal }}</td>
+          <slot v-if="com == 'af'">
+            <td>{{ f.iR.label }}</td>
+            <td>
+              <MonthlyTable v-bind:edit="false" v-model="iR" v-bind:field="f.iR"></MonthlyTable>
+            </td>
+            <td>{{ iR.tableTotal }}</td>
+          </slot>
+          <slot v-else>
+            <td>{{ f.iRa.label }}</td>
+            <td>
+              <MonthlyTable v-bind:edit="false" v-model="iRa" v-bind:field="f.iRa"></MonthlyTable>
+            </td>
+            <td>{{ iRa.tableTotal }}</td>
+          </slot>
         </tr>
 
         <tr>
-          <td>{{ f.iT.label }}</td>
-          <td class="">
-            <MonthlyTable v-bind:edit="false" v-model="iT" v-bind:field="f.iT"></MonthlyTable>
-          </td>
-          <td>{{ iT.tableTotal }}</td>
+          <slot v-if="com == 'af'">
+            <td>{{ f.iT.label }}</td>
+            <td class="">
+              <MonthlyTable v-bind:edit="false" v-model="iT" v-bind:field="f.iT"></MonthlyTable>
+            </td>
+            <td>{{ iT.tableTotal }}</td>
+          </slot>
+          <slot v-else>
+              <td>{{ f.iTa.label }}</td>
+              <td class="">
+                <MonthlyTable v-bind:edit="false" v-model="iTa" v-bind:field="f.iTa"></MonthlyTable>
+              </td>
+              <td>{{ iTa.tableTotal }}</td>
+          </slot>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td class="h3" colspan="2">Total à déclarer AJ ou BJ</td>
+          <td class="h3" colspan="2">{{ f.totalDeclarer.label }}</td>
           <td class="h3">{{ getTotal('declarer') }}</td>
         </tr>
       </tfoot>
     </table>
     <h1>A déduire</h1>
-    <table class="table">
+    <table id="deduire-table" class="table">
       <thead>
         <tr>
           <th scope="col">A déduire</th>
@@ -147,7 +169,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="h3" colspan="2">Total à déduire AK ou BK</td>
+          <td class="h3" colspan="2">{{ f.totalDeduire.label }}</td>
           <td class="h3">{{ getTotal('deduire') }}</td>
         </tr>
       </tfoot>
@@ -158,12 +180,14 @@
 
 import MonthlyTable from './MonthlyTable';
 import IdemnitesJournalieres from './IdemnitesJournalieres';
-// import html2pdf from 'html2pdf';
-
 import fieldsMixin from '../model/fieldsMixin';
 import modelFields from '../model/fields';
 
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 import { mapGetters } from 'vuex'
+// import logo from "../assets/logo.png"
 
 export default {
   mixins: [fieldsMixin],
@@ -173,12 +197,11 @@ export default {
     IdemnitesJournalieres
   },
   data() {
-    return { f : modelFields }
+    return { f : modelFields, com: this.$store.state.global.com }
   },
   computed: {
     ...mapGetters(['getTotal']),
-    ...fieldsMixin.mapFields("declarer", "updateField", ["cNI", "fH", "iS", 'iR', 'iT']),
-
+    ...fieldsMixin.mapFields("declarer", "updateField", ["cNI", "fH", "iS", 'iR', 'iT', 'iRa', 'iTa']),
     ...fieldsMixin.mapFields("deduire", "updateField", ["fTAp", "fTMp"]),
     ...fieldsMixin.mapFields("deduire", "updateIdemnitesJournalieres", ["iJ"]),
     ...fieldsMixin.mapFields("deduire", "updateDataTableField", ["fTAd", "fTMd", "fTC"]),
@@ -189,6 +212,205 @@ export default {
     ),
   },
   methods: {
+    savePDF() {
+      let doc = new jsPDF()
+      let finalY = 0;
+      const docTitle = 'SNPNC impôts frais réels ' + modelFields.year;
+
+      doc.setProperties({
+          title: docTitle,
+          subject: docTitle,
+          author: 'SNPNC',
+          creator: 'SNPNC'
+      });
+
+      const pageSize = doc.internal.pageSize;
+      const pageWidth = pageSize.getWidth();
+
+      doc.setFont('Helvetica');
+
+      // Title
+      doc.setFontSize(21);
+      doc.text(docTitle, (pageWidth / 2), 20, 'center');
+
+      // addImage(imageData, format, x, y, width, height, alias, compression, rotation)
+      doc.addImage(this.base64logo(), 'PNG', 14, 35, 40, 40);
+
+      doc.setFontSize(11);
+      doc.setTextColor(100);
+      doc.setFontType("normal");
+      var div = document.createElement("div");
+      div.innerHTML = modelFields.intro;
+      var text = doc.splitTextToSize(div.innerText, pageWidth - 75, {})
+      doc.text(text, 60, 38)
+
+      finalY = 90;
+      // Title
+      doc.setFontSize(18);
+      doc.setFontType("bold");
+      doc.text('A déclarer', 14, finalY);
+
+      finalY = 95;
+
+      let bodyDeclarer;
+      if (this.com == 'af') {
+        bodyDeclarer = [
+          [modelFields.cNI.label, this.cNI],
+          [modelFields.fH.label, this.fH],
+          [modelFields.iS.label, this.iS],
+          [modelFields.iR.label, this.iR.tableTotal],
+          [modelFields.iT.label, this.iT.tableTotal]
+        ];
+      } else {
+        bodyDeclarer = [
+          [modelFields.cNI.label, this.cNI],
+          [modelFields.fH.label, this.fH],
+          [modelFields.iS.label, this.iS],
+          [modelFields.iR.label, this.iRa.tableTotal],
+          [modelFields.iT.label, this.iTa.tableTotal]
+        ];
+      }
+
+      // A déclarer table
+      doc.autoTable({
+        head: [['A déclarer', 'Montant']],
+        body: bodyDeclarer,
+        foot: [[modelFields.totalDeclarer.label, this.getTotal('declarer')]],
+        startY: finalY,
+        rowPageBreak: 'auto',
+        bodyStyles: { valign: 'top' },
+        styles: { cellWidth: 'wrap', overflow: 'hidden' },
+        columnStyles: {
+          1 : { fontStyle: 'bold' },
+        },
+      })
+
+      finalY = doc.autoTable.previous.finalY;
+      // Title
+      doc.setFontSize(18);
+      doc.setFontType("bold");
+      doc.text('A déduire', 14, finalY + 15);
+
+      finalY += 15;
+
+      // A déduire table
+      doc.autoTable({
+        head: [['A déduire', 'Montant']],
+        body: [
+          [modelFields.iJ.label, this.iJ.tableTotal],
+          [modelFields.fTA.label, this.fTA],
+          [modelFields.fTM.label, this.fTM],
+          [modelFields.fTC.label, this.fTC.tableTotal],
+          [modelFields.cS.label, this.cS],
+          [modelFields.fB.label, this.fB],
+          [modelFields.fCMB.label, this.fCMB],
+          [modelFields.fTI.label, this.fTI],
+          [modelFields.fBa.label, this.fBa],
+          [modelFields.fDR.label, this.fDR],
+          [modelFields.fL.label, this.fL],
+          [modelFields.fF.label, this.fF]
+        ],
+        foot: [[modelFields.totalDeduire.label, this.getTotal('deduire')]],
+        startY: finalY + 5,
+        rowPageBreak: 'auto',
+        bodyStyles: { valign: 'top' },
+        styles: { cellWidth: 'wrap', overflow: 'hidden' },
+        columnStyles: {
+          1 : { fontStyle: 'bold' },
+        },
+      })
+
+      // Idemnités journalières
+      if (this.iJ.items.length > 0) {
+        let iJtotal = this.iJ.tableTotal;
+        doc.addPage();
+        doc.setFontSize(18);
+        doc.text('Indemnités journalières', 14, 22);
+        doc.setFontSize(11);
+        doc.autoTable({
+          columns: [
+              { dataKey: 'startDate', header: 'Début' },
+              { dataKey: 'endDate', header: 'Fin' },
+              { dataKey: 'comment', header: 'Calcul' },
+              { dataKey: 'value', header: 'Montant' },
+          ],
+          body: this.iJ.items,
+          foot: [ [{ content: 'Total', colSpan: 3}, iJtotal] ],
+          startY: 30,
+          rowPageBreak: 'auto',
+          bodyStyles: { valign: 'middle' },
+          styles: { cellWidth: 'wrap' },
+          columnStyles: {
+            comment : { cellWidth: 'auto', fontSize: 8 },
+          },
+        })
+      }
+      if (this.fTA > 0) {
+        finalY = doc.autoTable.previous.finalY;
+        // Title
+        doc.setFontSize(18);
+        doc.setFontType("bold");
+        doc.text(modelFields.fTA.label, 14, finalY + 20);
+
+        finalY += 25;
+
+        doc.autoTable({
+          body: [
+            [modelFields.fTAp.label, this.fTAp],
+            [modelFields.fTAd.label, this.fTAd.tableTotal],
+            [modelFields.fTA.label, modelFields.fTA.description]
+          ],
+          foot: [ ['Total', this.fTA] ],
+          startY: finalY,
+          rowPageBreak: 'auto',
+          bodyStyles: { valign: 'top' },
+        });
+
+      }
+
+      if (this.fTM > 0) {
+        finalY = doc.autoTable.previous.finalY;
+        // Title
+        doc.setFontSize(18);
+        doc.setFontType("bold");
+        doc.text(modelFields.fTM.label, 14, finalY + 20);
+
+        finalY += 25;
+
+        doc.autoTable({
+          body: [
+            [modelFields.fTMp.label, this.fTMp],
+            [modelFields.fTMd.label, this.fTMd.tableTotal],
+            [modelFields.fTM.label, modelFields.fTM.description]
+          ],
+          foot: [ ['Total', this.fTM] ],
+          startY: finalY,
+          rowPageBreak: 'auto',
+          bodyStyles: { valign: 'top' },
+        });
+
+      }
+
+
+
+
+      doc.save(docTitle + '.pdf');
+      // doc.output('dataurlnewwindow');
+    },
+    base64logo() {
+      var img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.src = require('../assets/logo.png');
+      var canvas = window.document.createElement('canvas');
+      var ctx = canvas.getContext('2d')
+      canvas.width = img.width
+      canvas.height = img.height
+      ctx.drawImage(img, 0, 0)
+
+      // If the image is not png, the format
+      // must be specified here
+      return canvas.toDataURL();
+    },
   }
 }
 </script>
