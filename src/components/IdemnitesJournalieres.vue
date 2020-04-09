@@ -137,6 +137,8 @@ export default {
         paysList.push({ pays: item.pays, zone: item.zone});
       }
     }
+    // Sort paysList.
+    paysList = paysList.sort((a,b) => (a.pays > b.pays) ? 1 : ((b.pays > a.pays) ? -1 : 0));
 
     // Set the default zone to E
     let zone = "E";
@@ -148,7 +150,7 @@ export default {
     // add placeholder item to list
     paysListFiltered.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
 
-
+    // rotations headers are different if we are editing or not.
     let rotationListFields;
 
     if (this.edit) {
@@ -190,15 +192,21 @@ export default {
   watch: {
     zone() {
 
-      this.paysListFiltered = this.paysList
-        .filter(item => item.zone == this.zone)
-        .map(item => {
-          return { value: item.pays, text: item.pays }
-      });
+      if (this.zone == modelData.zoneEurope.key) {
+        console.log("Europe");
+        this.paysListFiltered = this.paysList
+          .filter(item => item.zone == this.zone)
+          .map(item => {
+            return { value: item.pays, text: item.pays }
+        });
+      } else {
+        this.paysListFiltered = this.paysList.map(item => {
+            return { value: item.pays, text: item.pays }
+        });
+      }
 
       // add placeholder item to list
       this.paysListFiltered.unshift({ value: "null", text: "Sélectionnez le pays", disabled: true});
-
       this.setupRotation();
     },
     startDate() {
