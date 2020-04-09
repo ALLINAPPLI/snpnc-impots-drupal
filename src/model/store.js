@@ -119,32 +119,32 @@ export default {
     getTotal: (state) => (base) => {
       let total = 0;
       if (base === 'declarer') {
-        total += Math.round(parseFloat(state[base].cNI));
-        total += Math.round(parseFloat(state[base].fH));
-        total += Math.round(parseFloat(state[base].iS));
+        total += parseFloat(state[base].cNI);
+        total += parseFloat(state[base].fH);
+        total += parseFloat(state[base].iS);
         if (state.global.com == "af") {
-          total += state[base].iR.tableTotal;
-          total += state[base].iT.tableTotal;
+          total += parseFloat(state[base].iR.tableTotal);
+          total += parseFloat(state[base].iT.tableTotal);
         } else {
-          total += state[base].iRa.tableTotal;
-          total += state[base].iTa.tableTotal;
+          total += parseFloat(state[base].iRa.tableTotal);
+          total += parseFloat(state[base].iTa.tableTotal);
         }
       } else {
-        total += Math.round(parseFloat(state[base].cS));
-        total += state[base].iJ.tableTotal;
-        total += state[base].fTA;
-        total += state[base].fTM;
-        total += state[base].fTC.tableTotal;
-        total += Math.round(parseFloat(state[base].fB));
-        total += Math.round(parseFloat(state[base].fCMB));
-        total += Math.round(parseFloat(state[base].fTI));
-        total += Math.round(parseFloat(state[base].fBa));
-        total += Math.round(parseFloat(state[base].fDR));
-        total += Math.round(parseFloat(state[base].fL));
-        total += Math.round(parseFloat(state[base].fF));
+        total += parseFloat(state[base].cS);
+        total += parseFloat(state[base].iJ.tableTotal);
+        total += parseFloat(state[base].fTA);
+        total += parseFloat(state[base].fTM);
+        total += parseFloat(state[base].fTC.tableTotal);
+        total += parseFloat(state[base].fB);
+        total += parseFloat(state[base].fCMB);
+        total += parseFloat(state[base].fTI);
+        total += parseFloat(state[base].fBa);
+        total += parseFloat(state[base].fDR);
+        total += parseFloat(state[base].fL);
+        total += parseFloat(state[base].fF);
       }
 
-      return total;
+      return Math.round(total);
     }
   },
   mutations: {
@@ -162,13 +162,7 @@ export default {
       let index = value['index'];
       value = value['value'];
 
-      state[base][field].columns[column][index] = Math.round(parseFloat(value));
-      // if (typeof state[base][field].columns[column][index] === "number") {
-
-      // } else {
-      //   state[base][field].columns[column][index] = value;
-      // }
-      // is there a total column ?
+      state[base][field].columns[column][index] = parseFloat(value);
       if (state[base][field].total[column] !== undefined) {
         // update column total
         state[base][field].total[column] = state[base][field].columns[column].reduce(
@@ -185,7 +179,7 @@ export default {
       state[base][field].items = value;
 
       state[base][field].tableTotal = state[base][field].items.reduce(
-        (acc, item) => acc + Math.round(item.value), 0
+        (acc, item) => acc + parseFloat(item.value), 0
       );
     }
   },

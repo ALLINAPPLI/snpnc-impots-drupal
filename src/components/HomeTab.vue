@@ -2,7 +2,13 @@
   <b-container fluid>
     <b-row class="mt-3">
       <b-col><b-img rounded fluid :src="require('../assets/logo.png')"></b-img></b-col>
-      <b-col cols="9" v-html="f.intro"></b-col>
+      <b-col cols="9">
+        <p v-html="f.intro"></p>
+        <strong>
+          Pour saisir les valeurs décimales utiliser le point (".") au lieu
+          de la virgule (",").
+        </strong>
+      </b-col>
     </b-row>
 
     <b-row class="mt-3">

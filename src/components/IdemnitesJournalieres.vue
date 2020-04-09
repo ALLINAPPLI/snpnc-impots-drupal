@@ -323,7 +323,7 @@ export default {
         // rotation dans la même journée
         if (0 === this.dateDiffDays(this.startDate, this.endDate)) {
 
-          value = Math.round(modelData.idemniteZoneEurope / 2);
+          value = parseFloat(modelData.idemniteZoneEurope / 2);
           paysComment  += this.cRotationData[0].pays;
           valueComment += `${modelData.idemniteZoneEurope} / 2 = ${value}`;
         } else {
@@ -332,20 +332,20 @@ export default {
           // une seule rotation en zone europe
           if (1 === rotations) {
 
-            value = Math.round(this.cRotationData[0].idemnite * 1.5);
+            value = parseFloat(this.cRotationData[0].idemnite * 1.5);
             paysComment  += this.cRotationData[0].pays;
             valueComment += `${this.cRotationData[0].idemnite} * 1.5 = ${value}`;
           } else {
 
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += Math.round(this.cRotationData[i].idemnite);
+              value        += parseFloat(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
 
             // la dernière rotation.
-            value        += Math.round((1.5 * this.cRotationData[i].idemnite));
+            value        += parseFloat((1.5 * this.cRotationData[i].idemnite));
             valueComment += `1,5 x ${this.cRotationData[i].idemnite} = ${value}`;
             paysComment  += this.cRotationData[i].pays;
           }
@@ -362,7 +362,7 @@ export default {
         } else {
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += Math.round(this.cRotationData[i].idemnite);
+              value        += parseFloat(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
@@ -375,7 +375,7 @@ export default {
         comment += `${paysComment}\n${valueComment}`;
       }
 
-      value = Math.round(value);
+      value = parseFloat(value);
 
       this.rotationList.push({ startDate, endDate, comment, value });
       // update store value
