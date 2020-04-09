@@ -323,29 +323,26 @@ export default {
         // rotation dans la même journée
         if (0 === this.dateDiffDays(this.startDate, this.endDate)) {
 
-          value = parseFloat(modelData.idemniteZoneEurope / 2);
+          value = Number(modelData.idemniteZoneEurope / 2);
           paysComment  += this.cRotationData[0].pays;
           valueComment += `${modelData.idemniteZoneEurope} / 2 = ${value}`;
         } else {
-
-
           // une seule rotation en zone europe
           if (1 === rotations) {
-
-            value = parseFloat(this.cRotationData[0].idemnite * 1.5);
+            value = Number(this.cRotationData[0].idemnite * 1.5);
             paysComment  += this.cRotationData[0].pays;
             valueComment += `${this.cRotationData[0].idemnite} * 1.5 = ${value}`;
           } else {
 
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += parseFloat(this.cRotationData[i].idemnite);
+              value        += Number(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
 
             // la dernière rotation.
-            value        += parseFloat((1.5 * this.cRotationData[i].idemnite));
+            value        += Number(1.5 * this.cRotationData[i].idemnite);
             valueComment += `1,5 x ${this.cRotationData[i].idemnite} = ${value}`;
             paysComment  += this.cRotationData[i].pays;
           }
@@ -356,18 +353,18 @@ export default {
         comment += 'Zone Monde\n';
 
         if (1 === rotations) {
-          value        += 2 * this.cRotationData[0].idemnite;
+          value        += Number(2 * this.cRotationData[0].idemnite);
           valueComment += `2 x ${this.cRotationData[0].idemnite} = ${value}`;
           paysComment  += this.cRotationData[0].pays;
         } else {
             // pour toutes les rotations sauf la dernière.
             for (i = 0; i < rotations - 1; i++) {
-              value        += parseFloat(this.cRotationData[i].idemnite);
+              value        += Number(this.cRotationData[i].idemnite);
               paysComment  += this.cRotationData[i].pays + ', ';
               valueComment += this.cRotationData[i].idemnite + ' + ';
             }
             // la dernière rotation.
-            value        += Math.round(this.cRotationData[i].idemnite);
+            value        += Number(this.cRotationData[i].idemnite);
             paysComment  += this.cRotationData[i].pays;
             valueComment += `${this.cRotationData[i].idemnite} = ${value}`;
         }
@@ -375,7 +372,7 @@ export default {
         comment += `${paysComment}\n${valueComment}`;
       }
 
-      value = parseFloat(value);
+      value = parseFloat(value).toFixed(2);
 
       this.rotationList.push({ startDate, endDate, comment, value });
       // update store value
