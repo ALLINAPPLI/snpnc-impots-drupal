@@ -2,7 +2,7 @@
   <main>
 
   <slot v-if="edit">
-    <p>{{ field.help }}</p>
+    <p v-html="field.help"></p>
     <b-row>
       <b-col>
         <b-form-group label="Type de rotation">

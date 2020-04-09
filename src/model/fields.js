@@ -116,8 +116,10 @@ export default {
     label       : `Indemnités journalières`,
     description : 'Frais en escale',
     help        : `Si vous effectuez un découcher dans au moins une escale de
-    la "Zone monde" au cours de votre rotation CC-MC, alors votre type de rotation
-    est "Zone monde" et non "Zone Euro-Moyen".`
+    la Zone Monde au cours de votre rotation CC-MC, alors votre type de rotation
+    est "Zone monde" et non Zone Euro-Moyen. <strong>Pour une rotation journée (1 ON)</strong>,
+    quelle que soit votre destination (Zone Euro-Moyen ou Zone Monde),
+    sélectionnez la "Zone Euro-Moyen" et le pays "FRANCE".`
   },
   fTA: {
     id          : "frais-transport-automobile",

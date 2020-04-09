@@ -1,6 +1,6 @@
 {
   "name": "snpnc-impots",
-  "version": "0.1.0",
+  "version": "20.4.91",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

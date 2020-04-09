@@ -4,7 +4,6 @@
       <b-button size="sm" @click="savePDF()">Sauvegarder en PDF</b-button>
     </b-button-group>
     <h1>A déclarer</h1>
-    <img :src="this.base64logo()" style="display: none"/>
     <table id="declarer-table" class="table">
       <thead>
         <tr>
@@ -185,9 +184,9 @@ import modelFields from '../model/fields';
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logo from '../model/logob64';
 
 import { mapGetters } from 'vuex'
-// import logo from "../assets/logo.png"
 
 export default {
   mixins: [fieldsMixin],
@@ -197,7 +196,11 @@ export default {
     IdemnitesJournalieres
   },
   data() {
-    return { f : modelFields, com: this.$store.state.global.com }
+    return {
+      logo,
+      f : modelFields,
+      com: this.$store.state.global.com
+    }
   },
   computed: {
     ...mapGetters(['getTotal']),
@@ -234,7 +237,7 @@ export default {
       doc.text(docTitle, (pageWidth / 2), 20, 'center');
 
       // addImage(imageData, format, x, y, width, height, alias, compression, rotation)
-      doc.addImage(this.base64logo(), 'PNG', 14, 35, 40, 40);
+      doc.addImage(logo, 'PNG', 14, 35, 40, 40);
 
       doc.setFontSize(11);
       doc.setTextColor(100);
@@ -391,26 +394,8 @@ export default {
 
       }
 
-
-
-
       doc.save(docTitle + '.pdf');
-      // doc.output('dataurlnewwindow');
-    },
-    base64logo() {
-      var img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.src = require('../assets/logo.png');
-      var canvas = window.document.createElement('canvas');
-      var ctx = canvas.getContext('2d')
-      canvas.width = img.width
-      canvas.height = img.height
-      ctx.drawImage(img, 0, 0)
-
-      // If the image is not png, the format
-      // must be specified here
-      return canvas.toDataURL();
-    },
+    }
   }
 }
 </script>
