@@ -162,7 +162,7 @@ export default {
       let index = value['index'];
       value = value['value'];
 
-      state[base][field].columns[column][index] = Number(value).toFixed(2);
+      state[base][field].columns[column][index] = Number(value);
       if (state[base][field].total[column] !== undefined) {
         // update column total
         state[base][field].total[column] = state[base][field].columns[column].reduce(
