@@ -231,7 +231,6 @@ export default {
       const pageWidth = pageSize.getWidth();
 
       doc.setFont('Helvetica');
-
       // Title
       doc.setFontSize(21);
       doc.text(docTitle, (pageWidth / 2), 20, 'center');
@@ -241,7 +240,7 @@ export default {
 
       doc.setFontSize(11);
       doc.setTextColor(100);
-      doc.setFontType("normal");
+      doc.setFont('Helvetica', 'normal');
       var div = document.createElement("div");
       div.innerHTML = modelFields.intro;
       var text = doc.splitTextToSize(div.innerText, pageWidth - 75, {})
@@ -250,7 +249,7 @@ export default {
       finalY = 90;
       // Title
       doc.setFontSize(18);
-      doc.setFontType("bold");
+      doc.setFont('Helvetica', 'bold');
       doc.text('A déclarer', 14, finalY);
 
       finalY = 95;
@@ -291,7 +290,7 @@ export default {
       finalY = doc.autoTable.previous.finalY;
       // Title
       doc.setFontSize(18);
-      doc.setFontType("bold");
+      doc.setFont('Helvetica', 'bold');
       doc.text('A déduire', 14, finalY + 15);
 
       finalY += 15;
@@ -352,7 +351,7 @@ export default {
         finalY = doc.autoTable.previous.finalY;
         // Title
         doc.setFontSize(18);
-        doc.setFontType("bold");
+        doc.setFont('Helvetica', 'bold');
         doc.text(modelFields.fTA.label, 14, finalY + 20);
 
         finalY += 25;
@@ -375,7 +374,7 @@ export default {
         finalY = doc.autoTable.previous.finalY;
         // Title
         doc.setFontSize(18);
-        doc.setFontType("bold");
+        doc.setFont('Helvetica', 'bold');
         doc.text(modelFields.fTM.label, 14, finalY + 20);
 
         finalY += 25;
