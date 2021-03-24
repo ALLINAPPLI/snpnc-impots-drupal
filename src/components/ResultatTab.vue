@@ -218,7 +218,7 @@ export default {
     savePDF() {
       let doc = new jsPDF()
       let finalY = 0;
-      const docTitle = 'SNPNC impôts frais réels ' + modelFields.year;
+      let docTitle = 'SNPNC impôts frais réels ' + modelFields.year;
 
       doc.setProperties({
           title: docTitle,
@@ -393,7 +393,7 @@ export default {
 
       }
 
-      doc.save(docTitle + '.pdf');
+      doc.save(docTitle.replaceAll(" ", "-") + '.pdf');
     }
   }
 }
